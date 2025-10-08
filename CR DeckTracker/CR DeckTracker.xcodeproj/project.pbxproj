@@ -7,11 +7,19 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		BB96CF152E947C01007D2B6C /* CR DeckTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CR DeckTracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BB96CF2C2E965374007D2B6C /* CR DeckTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CR DeckTracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		BB96CF2E2E965374007D2B6C /* CR DeckTracker */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "CR DeckTracker";
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
-		BB96CF122E947C01007D2B6C /* Frameworks */ = {
+		BB96CF292E965374007D2B6C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -21,17 +29,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		BB96CF0C2E947C01007D2B6C = {
+		BB96CF232E965374007D2B6C = {
 			isa = PBXGroup;
 			children = (
-				BB96CF162E947C01007D2B6C /* Products */,
+				BB96CF2E2E965374007D2B6C /* CR DeckTracker */,
+				BB96CF2D2E965374007D2B6C /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		BB96CF162E947C01007D2B6C /* Products */ = {
+		BB96CF2D2E965374007D2B6C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BB96CF152E947C01007D2B6C /* CR DeckTracker.app */,
+				BB96CF2C2E965374007D2B6C /* CR DeckTracker.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -39,61 +48,64 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		BB96CF142E947C01007D2B6C /* CR DeckTracker */ = {
+		BB96CF2B2E965374007D2B6C /* CR DeckTracker */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BB96CF202E947C02007D2B6C /* Build configuration list for PBXNativeTarget "CR DeckTracker" */;
+			buildConfigurationList = BB96CF372E965375007D2B6C /* Build configuration list for PBXNativeTarget "CR DeckTracker" */;
 			buildPhases = (
-				BB96CF112E947C01007D2B6C /* Sources */,
-				BB96CF122E947C01007D2B6C /* Frameworks */,
-				BB96CF132E947C01007D2B6C /* Resources */,
+				BB96CF282E965374007D2B6C /* Sources */,
+				BB96CF292E965374007D2B6C /* Frameworks */,
+				BB96CF2A2E965374007D2B6C /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
+			fileSystemSynchronizedGroups = (
+				BB96CF2E2E965374007D2B6C /* CR DeckTracker */,
+			);
 			name = "CR DeckTracker";
 			packageProductDependencies = (
 			);
 			productName = "CR DeckTracker";
-			productReference = BB96CF152E947C01007D2B6C /* CR DeckTracker.app */;
+			productReference = BB96CF2C2E965374007D2B6C /* CR DeckTracker.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		BB96CF0D2E947C01007D2B6C /* Project object */ = {
+		BB96CF242E965374007D2B6C /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 2600;
 				LastUpgradeCheck = 2600;
 				TargetAttributes = {
-					BB96CF142E947C01007D2B6C = {
+					BB96CF2B2E965374007D2B6C = {
 						CreatedOnToolsVersion = 26.0.1;
 					};
 				};
 			};
-			buildConfigurationList = BB96CF102E947C01007D2B6C /* Build configuration list for PBXProject "CR DeckTracker" */;
+			buildConfigurationList = BB96CF272E965374007D2B6C /* Build configuration list for PBXProject "CR DeckTracker" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = BB96CF0C2E947C01007D2B6C;
+			mainGroup = BB96CF232E965374007D2B6C;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = BB96CF162E947C01007D2B6C /* Products */;
+			productRefGroup = BB96CF2D2E965374007D2B6C /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				BB96CF142E947C01007D2B6C /* CR DeckTracker */,
+				BB96CF2B2E965374007D2B6C /* CR DeckTracker */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		BB96CF132E947C01007D2B6C /* Resources */ = {
+		BB96CF2A2E965374007D2B6C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -103,7 +115,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		BB96CF112E947C01007D2B6C /* Sources */ = {
+		BB96CF282E965374007D2B6C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -113,7 +125,7 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		BB96CF1E2E947C02007D2B6C /* Debug */ = {
+		BB96CF352E965375007D2B6C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -148,6 +160,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 37TN6UB9SV;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -176,7 +189,7 @@
 			};
 			name = Debug;
 		};
-		BB96CF1F2E947C02007D2B6C /* Release */ = {
+		BB96CF362E965375007D2B6C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -211,6 +224,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 37TN6UB9SV;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -232,13 +246,14 @@
 			};
 			name = Release;
 		};
-		BB96CF212E947C02007D2B6C /* Debug */ = {
+		BB96CF382E965375007D2B6C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 37TN6UB9SV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -263,13 +278,14 @@
 			};
 			name = Debug;
 		};
-		BB96CF222E947C02007D2B6C /* Release */ = {
+		BB96CF392E965375007D2B6C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 37TN6UB9SV;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -297,25 +313,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		BB96CF102E947C01007D2B6C /* Build configuration list for PBXProject "CR DeckTracker" */ = {
+		BB96CF272E965374007D2B6C /* Build configuration list for PBXProject "CR DeckTracker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				BB96CF1E2E947C02007D2B6C /* Debug */,
-				BB96CF1F2E947C02007D2B6C /* Release */,
+				BB96CF352E965375007D2B6C /* Debug */,
+				BB96CF362E965375007D2B6C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BB96CF202E947C02007D2B6C /* Build configuration list for PBXNativeTarget "CR DeckTracker" */ = {
+		BB96CF372E965375007D2B6C /* Build configuration list for PBXNativeTarget "CR DeckTracker" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				BB96CF212E947C02007D2B6C /* Debug */,
-				BB96CF222E947C02007D2B6C /* Release */,
+				BB96CF382E965375007D2B6C /* Debug */,
+				BB96CF392E965375007D2B6C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = BB96CF0D2E947C01007D2B6C /* Project object */;
+	rootObject = BB96CF242E965374007D2B6C /* Project object */;
 }
