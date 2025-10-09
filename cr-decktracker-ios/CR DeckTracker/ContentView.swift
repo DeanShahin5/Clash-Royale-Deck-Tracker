@@ -45,6 +45,52 @@ struct ContentView: View {
             }
         }
         .onChange(of: item) { _ in Task { await handlePick() } }
+        .onAppear {
+            // Listen for scanned text from Share Extension
+            NotificationCenter.default.addObserver(
+                forName: NSNotification.Name("ScannedTextReceived"),
+                object: nil,
+                queue: .main
+            ) { notification in
+                if let text = notification.userInfo?["text"] as? String {
+                    withAnimation {
+                        self.playerName = text
+                        self.ocrText = text
+                    }
+                }
+            }
+            
+            // Check for shared data when app opens
+            if let sharedDefaults = UserDefaults(suiteName: "group.com.yourcompany.decktracker"),
+               let text = sharedDefaults.string(forKey: "lastScannedText"),
+               let date = sharedDefaults.object(forKey: "lastScanDate") as? Date {
+                
+                // Only use if recent (within last 10 seconds)
+                if Date().timeIntervalSince(date) < 10 {
+                    withAnimation {
+                        self.playerName = text
+                        self.ocrText = text
+                    }
+                    // Clear it
+                    sharedDefaults.removeObject(forKey: "lastScannedText")
+                }
+            }
+        }
+        .onAppear {
+            // Listen for scanned text from Share Extension
+            NotificationCenter.default.addObserver(
+                forName: NSNotification.Name("ScannedTextReceived"),
+                object: nil,
+                queue: .main
+            ) { notification in
+                if let text = notification.userInfo?["text"] as? String {
+                    withAnimation {
+                        self.playerName = text
+                        self.ocrText = text
+                    }
+                }
+            }
+        }
     }
     
     private var backgroundGradient: some View {
