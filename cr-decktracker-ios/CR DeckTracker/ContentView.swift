@@ -21,64 +21,205 @@ struct PredictResp: Codable {
 
 struct ContentView: View {
     @State private var item: PhotosPickerItem?
-    @State private var ocrText = "Pick a screenshot to OCR"
+    @State private var ocrText = "Tap to scan screenshot"
     @State private var playerName = ""
     @State private var clanName = ""
     @State private var result = ""
+    @State private var isLoading = false
+    @State private var showSuccess = false
     
     let apiBase = URL(string: "http://127.0.0.1:8001")!
 
     var body: some View {
-        VStack(spacing: 12) {
-            Text("Clash Royale Deck Tracker")
-                .font(.title3)
-                .bold()
-
-            PhotosPicker("Pick Screenshot", selection: $item, matching: .images)
-                .padding(.bottom, 6)
-
-            TextEditor(text: $ocrText)
-                .frame(height: 80)
-                .overlay(RoundedRectangle(cornerRadius: 8).stroke(.gray))
-                .padding(.horizontal)
-
-            VStack(spacing: 8) {
-                TextField("Player name", text: $playerName)
-                    .textFieldStyle(.roundedBorder)
-                    .autocapitalization(.none)
-                
-                TextField("Clan name (not tag)", text: $clanName)
-                    .textFieldStyle(.roundedBorder)
-                    .autocapitalization(.none)
-            }
-            .padding(.horizontal)
-
-            HStack {
-                Button("Use OCR as name") {
-                    playerName = ocrText
-                }
-                Button("Resolve → Predict") {
-                    Task { await resolveAndPredict() }
-                }
-            }
-
+        ZStack {
+            backgroundGradient
+            
             ScrollView {
-                Text(result)
-                    .padding()
+                VStack(spacing: 20) {
+                    headerView
+                    ocrCardView
+                    inputCardView
+                    resultsCardView
+                    Spacer(minLength: 40)
+                }
+            }
+        }
+        .onChange(of: item) { _ in Task { await handlePick() } }
+    }
+    
+    private var backgroundGradient: some View {
+        LinearGradient(
+            colors: [Color(hex: "1a1a2e"), Color(hex: "16213e")],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
+        .ignoresSafeArea()
+    }
+    
+    private var headerView: some View {
+        VStack(spacing: 8) {
+            Image(systemName: "crown.fill")
+                .font(.system(size: 40))
+                .foregroundColor(.yellow)
+            
+            Text("Deck Tracker")
+                .font(.system(size: 32, weight: .bold))
+                .foregroundColor(.white)
+            
+            Text("Clash Royale")
+                .font(.subheadline)
+                .foregroundColor(.white.opacity(0.7))
+        }
+        .padding(.top, 20)
+    }
+    
+    private var ocrCardView: some View {
+        VStack(spacing: 12) {
+            HStack {
+                Image(systemName: "camera.viewfinder")
+                    .foregroundColor(Color(hex: "5e72e4"))
+                Text("Screenshot Scanner")
+                    .font(.headline)
+                    .foregroundColor(.white)
+                Spacer()
+            }
+            
+            PhotosPicker(selection: $item, matching: .images) {
+                HStack {
+                    Image(systemName: "photo.badge.plus")
+                    Text("Pick Screenshot")
+                        .fontWeight(.semibold)
+                }
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(Color(hex: "5e72e4"))
+                .foregroundColor(.white)
+                .cornerRadius(12)
+            }
+            
+            Text(ocrText)
+                .font(.system(.body, design: .monospaced))
+                .foregroundColor(ocrText == "Tap to scan screenshot" ? .white.opacity(0.5) : .white)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding()
+                .background(Color.white.opacity(0.1))
+                .cornerRadius(8)
+            
+            if ocrText != "Tap to scan screenshot" {
+                Button(action: { playerName = ocrText }) {
+                    HStack {
+                        Image(systemName: "arrow.down.circle.fill")
+                        Text("Use as Player Name")
+                            .font(.subheadline)
+                    }
+                    .foregroundColor(Color(hex: "5e72e4"))
+                }
             }
         }
         .padding()
-        .onChange(of: item) { _ in Task { await handlePick() } }
+        .background(Color.white.opacity(0.08))
+        .cornerRadius(16)
+        .padding(.horizontal)
+    }
+    
+    private var inputCardView: some View {
+        VStack(spacing: 16) {
+            HStack {
+                Image(systemName: "person.text.rectangle")
+                    .foregroundColor(Color(hex: "11cdef"))
+                Text("Player Details")
+                    .font(.headline)
+                    .foregroundColor(.white)
+                Spacer()
+            }
+            
+            VStack(spacing: 12) {
+                CustomTextField(
+                    icon: "person.fill",
+                    placeholder: "Player Name",
+                    text: $playerName
+                )
+                
+                CustomTextField(
+                    icon: "building.2.fill",
+                    placeholder: "Clan Name",
+                    text: $clanName
+                )
+            }
+            
+            Button(action: { Task { await resolveAndPredict() } }) {
+                HStack {
+                    if isLoading {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                            .scaleEffect(0.8)
+                    } else {
+                        Image(systemName: "sparkles")
+                        Text("Find Decks")
+                            .fontWeight(.bold)
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                .padding()
+                .background(
+                    playerName.isEmpty || clanName.isEmpty
+                    ? Color.gray.opacity(0.3)
+                    : Color(hex: "11cdef")
+                )
+                .foregroundColor(.white)
+                .cornerRadius(12)
+            }
+            .disabled(playerName.isEmpty || clanName.isEmpty || isLoading)
+        }
+        .padding()
+        .background(Color.white.opacity(0.08))
+        .cornerRadius(16)
+        .padding(.horizontal)
+    }
+    
+    @ViewBuilder
+    private var resultsCardView: some View {
+        if !result.isEmpty {
+            VStack(spacing: 12) {
+                HStack {
+                    Image(systemName: showSuccess ? "checkmark.circle.fill" : "list.bullet.rectangle")
+                        .foregroundColor(showSuccess ? Color(hex: "2dce89") : Color(hex: "fb6340"))
+                    Text("Results")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                    Spacer()
+                }
+                
+                Text(result)
+                    .font(.system(.body, design: .rounded))
+                    .foregroundColor(.white)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding()
+                    .background(Color.white.opacity(0.1))
+                    .cornerRadius(8)
+            }
+            .padding()
+            .background(Color.white.opacity(0.08))
+            .cornerRadius(16)
+            .padding(.horizontal)
+            .transition(.scale.combined(with: .opacity))
+        }
     }
 
     func handlePick() async {
         guard let item else { return }
+        ocrText = "Scanning..."
         if let data = try? await item.loadTransferable(type: Data.self),
            let img = UIImage(data: data) {
             do {
-                ocrText = try await ocr(from: img)
+                let text = try await ocr(from: img)
+                withAnimation {
+                    ocrText = text.isEmpty ? "No text found" : text
+                }
             } catch {
-                ocrText = "OCR failed: \(error.localizedDescription)"
+                withAnimation {
+                    ocrText = "OCR failed: \(error.localizedDescription)"
+                }
             }
         }
     }
@@ -95,11 +236,20 @@ struct ContentView: View {
     }
 
     func resolveAndPredict() async {
-        result = "Searching for player in clans named '\(clanName)'…"
+        withAnimation {
+            isLoading = true
+            showSuccess = false
+            result = "🔍 Searching for player in '\(clanName)'..."
+        }
+        
         guard !playerName.isEmpty, !clanName.isEmpty else {
-            result = "Enter both player name and clan name."
+            withAnimation {
+                isLoading = false
+                result = "⚠️ Please enter both player name and clan name"
+            }
             return
         }
+        
         do {
             // 1) Resolve by clan name
             var req = URLRequest(url: apiBase.appendingPathComponent("/resolve_player_by_name"))
@@ -112,7 +262,10 @@ struct ContentView: View {
             
             if let httpResponse = response1 as? HTTPURLResponse, httpResponse.statusCode != 200 {
                 if let rawText = String(data: data1, encoding: .utf8) {
-                    result = "HTTP \(httpResponse.statusCode)\n\(rawText)"
+                    withAnimation {
+                        isLoading = false
+                        result = "❌ Error \(httpResponse.statusCode)\n\n\(rawText)"
+                    }
                 }
                 return
             }
@@ -120,25 +273,94 @@ struct ContentView: View {
             let resolved = try JSONDecoder().decode(ResolveResp.self, from: data1)
 
             // 2) Predict
-            result = "Found \(resolved.name) (\(resolved.confidence)% match)\nFetching decks…"
+            withAnimation {
+                result = "✓ Found \(resolved.name) (\(resolved.confidence)% match)\n⏳ Loading battle history..."
+            }
+            
             let url = apiBase.appendingPathComponent("/predict/\(resolved.player_tag)")
             let (data2, _) = try await URLSession.shared.data(from: url)
             let pred = try JSONDecoder().decode(PredictResp.self, from: data2)
 
             if pred.top3.isEmpty {
-                result = "Found \(resolved.name), but no recent battle history available."
+                withAnimation {
+                    isLoading = false
+                    result = "✓ Found \(resolved.name)\n⚠️ No recent ranked battles available"
+                }
                 return
             }
 
             let lines = pred.top3.enumerated().map { (i, d) in
-                "\(i+1). \(d.deck.joined(separator: ", "))  (\(Int(d.confidence * 100))%)"
-            }.joined(separator: "\n")
+                let emoji = ["🥇", "🥈", "🥉"][i]
+                let percentage = Int(d.confidence * 100)
+                let cards = d.deck.joined(separator: " • ")
+                return "\(emoji) Deck \(i+1) (\(percentage)%)\n   \(cards)"
+            }.joined(separator: "\n\n")
 
-            result = "Top decks for \(resolved.name):\n\(lines)"
+            withAnimation {
+                isLoading = false
+                showSuccess = true
+                result = "👑 \(resolved.name)\n━━━━━━━━━━━━━━━━━\n\n\(lines)"
+            }
         } catch let decodingError as DecodingError {
-            result = "Decoding error: \(decodingError)"
+            withAnimation {
+                isLoading = false
+                result = "❌ Decoding error:\n\(decodingError)"
+            }
         } catch {
-            result = "Error: \(error.localizedDescription)"
+            withAnimation {
+                isLoading = false
+                result = "❌ Error:\n\(error.localizedDescription)"
+            }
         }
+    }
+}
+
+// Custom TextField Component
+struct CustomTextField: View {
+    let icon: String
+    let placeholder: String
+    @Binding var text: String
+    
+    var body: some View {
+        HStack(spacing: 12) {
+            Image(systemName: icon)
+                .foregroundColor(.white.opacity(0.6))
+                .frame(width: 20)
+            
+            TextField(placeholder, text: $text)
+                .foregroundColor(.white)
+                .autocapitalization(.none)
+                .disableAutocorrection(true)
+        }
+        .padding()
+        .background(Color.white.opacity(0.1))
+        .cornerRadius(10)
+    }
+}
+
+// Color Extension for Hex
+extension Color {
+    init(hex: String) {
+        let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+        var int: UInt64 = 0
+        Scanner(string: hex).scanHexInt64(&int)
+        let a, r, g, b: UInt64
+        switch hex.count {
+        case 3: // RGB (12-bit)
+            (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
+        case 6: // RGB (24-bit)
+            (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
+        case 8: // ARGB (32-bit)
+            (a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
+        default:
+            (a, r, g, b) = (255, 0, 0, 0)
+        }
+        self.init(
+            .sRGB,
+            red: Double(r) / 255,
+            green: Double(g) / 255,
+            blue:  Double(b) / 255,
+            opacity: Double(a) / 255
+        )
     }
 }
