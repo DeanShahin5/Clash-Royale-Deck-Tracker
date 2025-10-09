@@ -341,3 +341,4 @@ async def debug_battlelog(player_tag: str):
     async with httpx.AsyncClient() as client:
         battles = await sc_get(client, f"/players/{enc_tag(player_tag)}/battlelog")
     return {"raw_battles": battles, "count": len(battles)}
+    

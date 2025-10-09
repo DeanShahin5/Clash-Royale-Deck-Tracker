@@ -172,7 +172,7 @@ struct ContentView: View {
                 )
                 
                 CustomTextField(
-                    icon: "building.2.fill",
+                    icon: "flag.filled.and.flag.crossed",
                     placeholder: "Clan Name",
                     text: $clanName
                 )
@@ -358,14 +358,18 @@ struct CustomTextField: View {
                 .foregroundColor(.white.opacity(0.6))
                 .frame(width: 20)
             
-            TextField(placeholder, text: $text)
+            TextField("", text: $text, prompt: Text(placeholder).foregroundColor(.white.opacity(0.5)))
                 .foregroundColor(.white)
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
         }
         .padding()
-        .background(Color.white.opacity(0.1))
+        .background(Color.white.opacity(0.15))
         .cornerRadius(10)
+        .overlay(
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(Color.white.opacity(0.2), lineWidth: 1)
+        )
     }
 }
 
