@@ -61,7 +61,7 @@ struct ContentView: View {
             }
             
             // Check for shared data when app opens
-            if let sharedDefaults = UserDefaults(suiteName: "group.com.yourcompany.decktracker"),
+            if let sharedDefaults = UserDefaults(suiteName: "group.com.dean.decktracker"),
                let text = sharedDefaults.string(forKey: "lastScannedText"),
                let date = sharedDefaults.object(forKey: "lastScanDate") as? Date {
                 
@@ -73,21 +73,6 @@ struct ContentView: View {
                     }
                     // Clear it
                     sharedDefaults.removeObject(forKey: "lastScannedText")
-                }
-            }
-        }
-        .onAppear {
-            // Listen for scanned text from Share Extension
-            NotificationCenter.default.addObserver(
-                forName: NSNotification.Name("ScannedTextReceived"),
-                object: nil,
-                queue: .main
-            ) { notification in
-                if let text = notification.userInfo?["text"] as? String {
-                    withAnimation {
-                        self.playerName = text
-                        self.ocrText = text
-                    }
                 }
             }
         }
