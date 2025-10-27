@@ -9,7 +9,7 @@ struct ResultsView: View {
             HStack {
                 Image(systemName: "trophy.fill")
                     .foregroundStyle(
-                        LinearGradient(gradient: Gradient(
+                        LinearGradient(
                             gradient: Gradient(colors: [Color(hex: "FFD700"), Color(hex: "FFA500")]),
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing

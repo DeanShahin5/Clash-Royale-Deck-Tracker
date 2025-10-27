@@ -22,25 +22,25 @@ struct DeckCardView: View {
     private var rankGradient: LinearGradient {
         switch rank {
         case 1:
-            return LinearGradient(gradient: Gradient(
+            return LinearGradient(
                 gradient: Gradient(colors: [Color(hex: "FFD700"), Color(hex: "FFA500")]),
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
         case 2:
-            return LinearGradient(gradient: Gradient(
+            return LinearGradient(
                 gradient: Gradient(colors: [Color(hex: "C0C0C0"), Color(hex: "A8A8A8")]),
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
         case 3:
-            return LinearGradient(gradient: Gradient(
+            return LinearGradient(
                 gradient: Gradient(colors: [Color(hex: "CD7F32"), Color(hex: "B87333")]),
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
         default:
-            return LinearGradient(gradient: Gradient(
+            return LinearGradient(
                 gradient: Gradient(colors: [.gray]),
                 startPoint: .top,
                 endPoint: .bottom
@@ -145,7 +145,7 @@ struct DeckCardView: View {
                 .overlay(
                     RoundedRectangle(cornerRadius: 18)
                         .strokeBorder(
-                            LinearGradient(gradient: Gradient(
+                            LinearGradient(
                                 gradient: Gradient(colors: [rankPrimaryColor.opacity(0.3), Color.white.opacity(0.05)]),
                                 startPoint: .topLeading,
                                 endPoint: .bottomTrailing
