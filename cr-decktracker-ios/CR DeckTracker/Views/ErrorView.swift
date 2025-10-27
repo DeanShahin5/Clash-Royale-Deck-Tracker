@@ -9,7 +9,7 @@ struct ErrorView: View {
                 .font(.system(size: 40))
                 .foregroundStyle(
                     LinearGradient(
-                        colors: [Color(hex: "ff6b6b"), Color(hex: "ee5a6f")],
+                        gradient: Gradient(colors: [Color(hex: "ff6b6b"), Color(hex: "ee5a6f")]),
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     )

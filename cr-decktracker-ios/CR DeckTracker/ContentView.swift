@@ -68,11 +68,11 @@ struct ContentView: View {
     // MARK: - Background
     private var backgroundGradient: some View {
         LinearGradient(
-            colors: [
+            gradient: Gradient(colors: [
                 Color(hex: "0f0c29"),
                 Color(hex: "302b63"),
                 Color(hex: "24243e")
-            ],
+            ]),
             startPoint: .topLeading,
             endPoint: .bottomTrailing
         )

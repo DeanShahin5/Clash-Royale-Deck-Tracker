@@ -4,28 +4,47 @@ struct DeckCardView: View {
     let deck: Deck
     let rank: Int
 
-    private var rankColor: LinearGradient {
+    // Primary color for text/icons
+    private var rankPrimaryColor: Color {
         switch rank {
         case 1:
-            return LinearGradient(
-                colors: [Color(hex: "FFD700"), Color(hex: "FFA500")],
+            return Color(hex: "FFD700")
+        case 2:
+            return Color(hex: "C0C0C0")
+        case 3:
+            return Color(hex: "CD7F32")
+        default:
+            return .gray
+        }
+    }
+
+    // Gradient for backgrounds
+    private var rankGradient: LinearGradient {
+        switch rank {
+        case 1:
+            return LinearGradient(gradient: Gradient(
+                gradient: Gradient(colors: [Color(hex: "FFD700"), Color(hex: "FFA500")]),
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
         case 2:
-            return LinearGradient(
-                colors: [Color(hex: "C0C0C0"), Color(hex: "A8A8A8")],
+            return LinearGradient(gradient: Gradient(
+                gradient: Gradient(colors: [Color(hex: "C0C0C0"), Color(hex: "A8A8A8")]),
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
         case 3:
-            return LinearGradient(
-                colors: [Color(hex: "CD7F32"), Color(hex: "B87333")],
+            return LinearGradient(gradient: Gradient(
+                gradient: Gradient(colors: [Color(hex: "CD7F32"), Color(hex: "B87333")]),
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
         default:
-            return LinearGradient(colors: [.gray], startPoint: .top, endPoint: .bottom)
+            return LinearGradient(gradient: Gradient(
+                gradient: Gradient(colors: [.gray]),
+                startPoint: .top,
+                endPoint: .bottom
+            )
         }
     }
 
@@ -38,9 +57,9 @@ struct DeckCardView: View {
             HStack(spacing: 12) {
                 ZStack {
                     Circle()
-                        .fill(rankColor)
+                        .fill(rankGradient)
                         .frame(width: 48, height: 48)
-                        .shadow(color: rankColor.stops[0].color.opacity(0.5), radius: 8, x: 0, y: 4)
+                        .shadow(color: rankPrimaryColor.opacity(0.5), radius: 8, x: 0, y: 4)
 
                     Text(rankEmoji)
                         .font(.system(size: 24))
@@ -54,7 +73,7 @@ struct DeckCardView: View {
                     HStack(spacing: 8) {
                         Text("\(Int(deck.confidence * 100))%")
                             .font(.system(size: 14, weight: .bold, design: .rounded))
-                            .foregroundColor(rankColor.stops[0].color)
+                            .foregroundColor(rankPrimaryColor)
 
                         Text("confidence")
                             .font(.system(size: 13, weight: .medium, design: .rounded))
@@ -65,7 +84,7 @@ struct DeckCardView: View {
                 Spacer()
 
                 Image(systemName: "chart.bar.fill")
-                    .foregroundColor(rankColor.stops[0].color)
+                    .foregroundColor(rankPrimaryColor)
                     .font(.system(size: 20))
             }
 
@@ -77,9 +96,9 @@ struct DeckCardView: View {
                         .frame(height: 8)
 
                     RoundedRectangle(cornerRadius: 6)
-                        .fill(rankColor)
+                        .fill(rankGradient)
                         .frame(width: geometry.size.width * deck.confidence, height: 8)
-                        .shadow(color: rankColor.stops[0].color.opacity(0.6), radius: 4, x: 0, y: 2)
+                        .shadow(color: rankPrimaryColor.opacity(0.6), radius: 4, x: 0, y: 2)
                 }
             }
             .frame(height: 8)
@@ -126,8 +145,8 @@ struct DeckCardView: View {
                 .overlay(
                     RoundedRectangle(cornerRadius: 18)
                         .strokeBorder(
-                            LinearGradient(
-                                colors: [rankColor.stops[0].color.opacity(0.3), Color.white.opacity(0.05)],
+                            LinearGradient(gradient: Gradient(
+                                gradient: Gradient(colors: [rankPrimaryColor.opacity(0.3), Color.white.opacity(0.05)]),
                                 startPoint: .topLeading,
                                 endPoint: .bottomTrailing
                             ),

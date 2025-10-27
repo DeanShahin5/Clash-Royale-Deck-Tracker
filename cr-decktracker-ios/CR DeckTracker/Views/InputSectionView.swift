@@ -56,7 +56,7 @@ struct InputSectionView: View {
                             Color.gray.opacity(0.3)
                         } else {
                             LinearGradient(
-                                colors: [Color(hex: "f093fb"), Color(hex: "f5576c")],
+                                gradient: Gradient(colors: [Color(hex: "f093fb"), Color(hex: "f5576c")]),
                                 startPoint: .leading,
                                 endPoint: .trailing
                             )
@@ -83,7 +83,7 @@ struct InputSectionView: View {
                     RoundedRectangle(cornerRadius: 20)
                         .strokeBorder(
                             LinearGradient(
-                                colors: [Color.white.opacity(0.15), Color.white.opacity(0.05)],
+                                gradient: Gradient(colors: [Color.white.opacity(0.15), Color.white.opacity(0.05)]),
                                 startPoint: .topLeading,
                                 endPoint: .bottomTrailing
                             ),

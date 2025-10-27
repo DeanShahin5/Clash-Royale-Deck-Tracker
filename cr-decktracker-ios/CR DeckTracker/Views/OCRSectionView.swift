@@ -26,7 +26,7 @@ struct OCRSectionView: View {
                 .padding(.vertical, 16)
                 .background(
                     LinearGradient(
-                        colors: [Color(hex: "667eea"), Color(hex: "764ba2")],
+                        gradient: Gradient(colors: [Color(hex: "667eea"), Color(hex: "764ba2")]),
                         startPoint: .leading,
                         endPoint: .trailing
                     )
@@ -58,7 +58,7 @@ struct OCRSectionView: View {
                         RoundedRectangle(cornerRadius: 10)
                             .strokeBorder(
                                 LinearGradient(
-                                    colors: [Color.white.opacity(0.1), Color.white.opacity(0.05)],
+                                    gradient: Gradient(colors: [Color.white.opacity(0.1), Color.white.opacity(0.05)]),
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
                                 ),
@@ -88,7 +88,7 @@ struct OCRSectionView: View {
                     RoundedRectangle(cornerRadius: 20)
                         .strokeBorder(
                             LinearGradient(
-                                colors: [Color.white.opacity(0.15), Color.white.opacity(0.05)],
+                                gradient: Gradient(colors: [Color.white.opacity(0.15), Color.white.opacity(0.05)]),
                                 startPoint: .topLeading,
                                 endPoint: .bottomTrailing
                             ),

@@ -6,8 +6,8 @@ struct HeaderView: View {
             ZStack {
                 Circle()
                     .fill(
-                        LinearGradient(
-                            colors: [Color(hex: "FFD700"), Color(hex: "FFA500")],
+                        LinearGradient(gradient: Gradient(
+                            gradient: Gradient(colors: [Color(hex: "FFD700"), Color(hex: "FFA500")]),
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
                         )
@@ -18,8 +18,8 @@ struct HeaderView: View {
                 Image(systemName: "crown.fill")
                     .font(.system(size: 36, weight: .bold))
                     .foregroundStyle(
-                        LinearGradient(
-                            colors: [.white, Color(hex: "FFF4E0")],
+                        LinearGradient(gradient: Gradient(
+                            gradient: Gradient(colors: [.white, Color(hex: "FFF4E0")]),
                             startPoint: .top,
                             endPoint: .bottom
                         )
@@ -29,8 +29,8 @@ struct HeaderView: View {
             Text("Deck Tracker")
                 .font(.system(size: 36, weight: .black, design: .rounded))
                 .foregroundStyle(
-                    LinearGradient(
-                        colors: [.white, Color(hex: "E0E0E0")],
+                    LinearGradient(gradient: Gradient(
+                        gradient: Gradient(colors: [.white, Color(hex: "E0E0E0")]),
                         startPoint: .top,
                         endPoint: .bottom
                     )
