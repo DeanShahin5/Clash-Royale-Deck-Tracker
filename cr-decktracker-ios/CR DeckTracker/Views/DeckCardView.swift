@@ -8,11 +8,11 @@ struct DeckCardView: View {
     private var rankPrimaryColor: Color {
         switch rank {
         case 1:
-            return Color(hex: "FFD700")
+            return Color(hex: "FF8C00")
         case 2:
-            return Color(hex: "C0C0C0")
+            return Color(hex: "3B7DD6")
         case 3:
-            return Color(hex: "CD7F32")
+            return Color(hex: "8E44AD")
         default:
             return .gray
         }
@@ -23,19 +23,19 @@ struct DeckCardView: View {
         switch rank {
         case 1:
             return LinearGradient(
-                gradient: Gradient(colors: [Color(hex: "FFD700"), Color(hex: "FFA500")]),
+                gradient: Gradient(colors: [Color(hex: "FF8C00"), Color(hex: "FFA500")]),
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
         case 2:
             return LinearGradient(
-                gradient: Gradient(colors: [Color(hex: "C0C0C0"), Color(hex: "A8A8A8")]),
+                gradient: Gradient(colors: [Color(hex: "3B7DD6"), Color(hex: "5B9BD5")]),
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
         case 3:
             return LinearGradient(
-                gradient: Gradient(colors: [Color(hex: "CD7F32"), Color(hex: "B87333")]),
+                gradient: Gradient(colors: [Color(hex: "8E44AD"), Color(hex: "9B59B6")]),
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )

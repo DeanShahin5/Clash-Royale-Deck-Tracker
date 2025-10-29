@@ -1,15 +1,79 @@
 import SwiftUI
 import PhotosUI
 
-// Main entry point - now shows tab navigation
-struct ContentView: View {
+struct MainTabView: View {
+    @State private var selectedTab = 1 // Start with Scanner tab (center)
+    @State private var showLoginSheet = false
+    @StateObject private var authService = AuthService.shared
+
     var body: some View {
-        MainTabView()
+        ZStack(alignment: .topTrailing) {
+            TabView(selection: $selectedTab) {
+                // Clan Tab
+                ClanView()
+                    .tabItem {
+                        Label("My Clan", systemImage: "chart.bar.fill")
+                    }
+                    .tag(0)
+
+                // Scanner Tab (Default/Center)
+                ScannerView()
+                    .tabItem {
+                        Label("Scanner", systemImage: "viewfinder")
+                    }
+                    .tag(1)
+
+                // Profile Tab
+                ProfileView()
+                    .tabItem {
+                        Label("Profile", systemImage: "person.fill")
+                    }
+                    .tag(2)
+            }
+            .accentColor(Color(hex: "4A90E2"))
+
+            // Profile Icon Button (Top-Right)
+            Button(action: {
+                if authService.isLoggedIn {
+                    // TODO: Show profile menu
+                } else {
+                    showLoginSheet = true
+                }
+            }) {
+                ZStack {
+                    Circle()
+                        .fill(
+                            authService.isLoggedIn
+                            ? LinearGradient(
+                                gradient: Gradient(colors: [Color(hex: "10B981"), Color(hex: "059669")]),
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                            : LinearGradient(
+                                gradient: Gradient(colors: [Color(hex: "4A90E2"), Color(hex: "5B9BD5")]),
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                        .frame(width: 40, height: 40)
+                        .shadow(color: (authService.isLoggedIn ? Color(hex: "10B981") : Color(hex: "4A90E2")).opacity(0.4), radius: 8, x: 0, y: 4)
+
+                    Image(systemName: authService.isLoggedIn ? "checkmark.circle.fill" : "person.circle")
+                        .font(.system(size: 20, weight: .semibold))
+                        .foregroundColor(.white)
+                }
+            }
+            .padding(.top, 50)
+            .padding(.trailing, 20)
+        }
+        .sheet(isPresented: $showLoginSheet) {
+            LoginView()
+        }
     }
 }
 
-// Legacy struct kept for compatibility (not used)
-struct ContentView_Old: View {
+// Renamed ContentView to ScannerView for clarity
+struct ScannerView: View {
     // MARK: - State
     @State private var item: PhotosPickerItem?
     @State private var ocrText = "Tap to scan screenshot"

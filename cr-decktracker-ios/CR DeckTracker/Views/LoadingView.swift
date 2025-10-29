@@ -14,7 +14,7 @@ struct LoadingView: View {
                     .trim(from: 0, to: 0.7)
                     .stroke(
                         LinearGradient(
-                            gradient: Gradient(colors: [Color(hex: "4facfe"), Color(hex: "00f2fe")]),
+                            gradient: Gradient(colors: [Color(hex: "3B7DD6"), Color(hex: "5B9BD5")]),
                             startPoint: .leading,
                             endPoint: .trailing
                         ),
@@ -28,7 +28,7 @@ struct LoadingView: View {
                     .font(.system(size: 28))
                     .foregroundStyle(
                         LinearGradient(
-                            gradient: Gradient(colors: [Color(hex: "4facfe"), Color(hex: "00f2fe")]),
+                            gradient: Gradient(colors: [Color(hex: "3B7DD6"), Color(hex: "5B9BD5")]),
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
                         )
@@ -56,7 +56,7 @@ struct LoadingView: View {
                     RoundedRectangle(cornerRadius: 20)
                         .strokeBorder(
                             LinearGradient(
-                                gradient: Gradient(colors: [Color(hex: "4facfe").opacity(0.3), Color(hex: "00f2fe").opacity(0.3)]),
+                                gradient: Gradient(colors: [Color(hex: "3B7DD6").opacity(0.3), Color(hex: "5B9BD5").opacity(0.3)]),
                                 startPoint: .topLeading,
                                 endPoint: .bottomTrailing
                             ),

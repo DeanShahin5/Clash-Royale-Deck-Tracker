@@ -24,14 +24,14 @@ struct InputSectionView: View {
                     icon: "person.fill",
                     placeholder: "Player Name",
                     text: $playerName,
-                    accentColor: Color(hex: "4facfe")
+                    accentColor: Color(hex: "FF8C00")
                 )
 
                 ModernTextField(
                     icon: "flag.fill",
                     placeholder: "Clan Name",
                     text: $clanName,
-                    accentColor: Color(hex: "00f2fe")
+                    accentColor: Color(hex: "3B7DD6")
                 )
             }
 
@@ -56,7 +56,7 @@ struct InputSectionView: View {
                             Color.gray.opacity(0.3)
                         } else {
                             LinearGradient(
-                                gradient: Gradient(colors: [Color(hex: "f093fb"), Color(hex: "f5576c")]),
+                                gradient: Gradient(colors: [Color(hex: "FF8C00"), Color(hex: "FFA500")]),
                                 startPoint: .leading,
                                 endPoint: .trailing
                             )
@@ -66,7 +66,7 @@ struct InputSectionView: View {
                 .foregroundColor(.white)
                 .cornerRadius(14)
                 .shadow(
-                    color: isButtonDisabled ? .clear : Color(hex: "f5576c").opacity(0.4),
+                    color: isButtonDisabled ? .clear : Color(hex: "FF8C00").opacity(0.4),
                     radius: 12,
                     x: 0,
                     y: 6

@@ -7,19 +7,19 @@ struct HeaderView: View {
                 Circle()
                     .fill(
                         LinearGradient(
-                            gradient: Gradient(colors: [Color(hex: "FFD700"), Color(hex: "FFA500")]),
+                            gradient: Gradient(colors: [Color(hex: "FF3B30"), Color(hex: "FF1744")]),
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
                         )
                     )
                     .frame(width: 80, height: 80)
-                    .shadow(color: Color(hex: "FFD700").opacity(0.5), radius: 20, x: 0, y: 10)
+                    .shadow(color: Color(hex: "FF3B30").opacity(0.6), radius: 20, x: 0, y: 10)
 
                 Image(systemName: "crown.fill")
                     .font(.system(size: 36, weight: .bold))
                     .foregroundStyle(
                         LinearGradient(
-                            gradient: Gradient(colors: [.white, Color(hex: "FFF4E0")]),
+                            gradient: Gradient(colors: [.white, Color(hex: "FFEBEE")]),
                             startPoint: .top,
                             endPoint: .bottom
                         )

@@ -15,66 +15,91 @@ struct OCRSectionView: View {
                 Spacer()
             }
 
+            // Interactive Scan Zone - Reduced Size
             PhotosPicker(selection: $item, matching: .images) {
-                HStack(spacing: 12) {
-                    Image(systemName: "photo.badge.plus")
-                        .font(.system(size: 20, weight: .semibold))
-                    Text("Select Screenshot")
-                        .font(.system(size: 16, weight: .bold, design: .rounded))
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 16)
-                .background(
-                    LinearGradient(
-                        gradient: Gradient(colors: [Color(hex: "667eea"), Color(hex: "764ba2")]),
-                        startPoint: .leading,
-                        endPoint: .trailing
-                    )
-                )
-                .foregroundColor(.white)
-                .cornerRadius(14)
-                .shadow(color: Color(hex: "667eea").opacity(0.4), radius: 12, x: 0, y: 6)
-            }
-
-            VStack(alignment: .leading, spacing: 8) {
-                HStack {
-                    Image(systemName: "doc.text.viewfinder")
-                        .foregroundColor(Color(hex: "667eea"))
-                        .font(.system(size: 14))
-                    Text("Scanned Text")
-                        .font(.system(size: 12, weight: .semibold, design: .rounded))
-                        .foregroundColor(.white.opacity(0.6))
-                    Spacer()
-                }
-
-                Text(ocrText)
-                    .font(.system(size: 15, weight: .medium, design: .rounded))
-                    .foregroundColor(ocrText == "Tap to scan screenshot" ? .white.opacity(0.4) : .white)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(14)
-                    .background(Color.black.opacity(0.3))
-                    .cornerRadius(10)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .strokeBorder(
+                VStack(spacing: 12) {
+                    // Camera Icon
+                    ZStack {
+                        Circle()
+                            .fill(
                                 LinearGradient(
-                                    gradient: Gradient(colors: [Color.white.opacity(0.1), Color.white.opacity(0.05)]),
+                                    gradient: Gradient(colors: [Color(hex: "4A90E2"), Color(hex: "5B9BD5")]),
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
-                                ),
-                                lineWidth: 1
+                                )
                             )
-                    )
-            }
+                            .frame(width: 56, height: 56)
+                            .shadow(color: Color(hex: "4A90E2").opacity(0.5), radius: 12, x: 0, y: 6)
 
+                        Image(systemName: "camera.fill")
+                            .font(.system(size: 26, weight: .bold))
+                            .foregroundColor(.white)
+                    }
+
+                    VStack(spacing: 4) {
+                        Text("Tap to Scan")
+                            .font(.system(size: 16, weight: .bold, design: .rounded))
+                            .foregroundColor(.white)
+
+                        Text("Select a screenshot")
+                            .font(.system(size: 12, weight: .medium, design: .rounded))
+                            .foregroundColor(.white.opacity(0.6))
+                    }
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 24)
+                .background(Color.black.opacity(0.3))
+                .cornerRadius(14)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 14)
+                        .strokeBorder(
+                            style: StrokeStyle(lineWidth: 2, dash: [8, 6])
+                        )
+                        .foregroundStyle(
+                            LinearGradient(
+                                gradient: Gradient(colors: [Color(hex: "4A90E2"), Color(hex: "5B9BD5")]),
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                )
+            }
+            .padding(.horizontal, 30)
+
+            // Scanned Text Display
             if ocrText != "Tap to scan screenshot" {
+                VStack(alignment: .leading, spacing: 8) {
+                    HStack {
+                        Image(systemName: "text.viewfinder")
+                            .foregroundColor(Color(hex: "3B7DD6"))
+                            .font(.system(size: 14))
+                        Text("Scanned Text")
+                            .font(.system(size: 12, weight: .semibold, design: .rounded))
+                            .foregroundColor(.white.opacity(0.6))
+                        Spacer()
+                    }
+
+                    Text(ocrText)
+                        .font(.system(size: 15, weight: .medium, design: .rounded))
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(14)
+                        .background(Color.black.opacity(0.3))
+                        .cornerRadius(10)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .strokeBorder(Color(hex: "3B7DD6").opacity(0.3), lineWidth: 1)
+                        )
+                }
+                .transition(.scale.combined(with: .opacity))
+
                 Button(action: onUseAsPlayerName) {
                     HStack(spacing: 8) {
                         Image(systemName: "arrow.down.circle.fill")
                         Text("Use as Player Name")
                             .font(.system(size: 14, weight: .semibold, design: .rounded))
                     }
-                    .foregroundColor(Color(hex: "667eea"))
+                    .foregroundColor(Color(hex: "4A90E2"))
                     .padding(.vertical, 8)
                 }
                 .transition(.scale.combined(with: .opacity))
