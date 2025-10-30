@@ -10,7 +10,7 @@ struct ResultsView: View {
                 Image(systemName: "trophy.fill")
                     .foregroundStyle(
                         LinearGradient(
-                            gradient: Gradient(colors: [Color(hex: "FFD700"), Color(hex: "FFA500")]),
+                            gradient: Gradient(colors: [Color(hex: "4A90E2"), Color(hex: "5B9BD5")]),
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
                         )
@@ -20,12 +20,12 @@ struct ResultsView: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Predicted Decks")
                         .font(.system(size: 18, weight: .bold, design: .rounded))
-                        .foregroundColor(.white)
+                        .foregroundColor(Color(hex: "2C3E50"))
 
                     if !playerName.isEmpty {
                         Text(playerName)
                             .font(.system(size: 13, weight: .medium, design: .rounded))
-                            .foregroundColor(.white.opacity(0.6))
+                            .foregroundColor(Color(hex: "7F8C8D"))
                     }
                 }
 

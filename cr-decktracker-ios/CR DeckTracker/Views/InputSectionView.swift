@@ -4,6 +4,7 @@ struct InputSectionView: View {
     @Binding var playerName: String
     @Binding var clanName: String
     @Binding var isLoading: Bool
+    @Binding var gameMode: String
     let onFindDecks: () -> Void
 
     private var isButtonDisabled: Bool {
@@ -15,8 +16,28 @@ struct InputSectionView: View {
             HStack {
                 Label("Player Information", systemImage: "person.text.rectangle.fill")
                     .font(.system(size: 16, weight: .bold, design: .rounded))
-                    .foregroundColor(.white)
+                    .foregroundColor(Color(hex: "2C3E50"))
                 Spacer()
+            }
+
+            // Game Mode Selector
+            VStack(alignment: .leading, spacing: 8) {
+                HStack {
+                    Image(systemName: "gamecontroller.fill")
+                        .foregroundColor(Color(hex: "4A90E2"))
+                        .font(.system(size: 14))
+                    Text("Game Mode")
+                        .font(.system(size: 12, weight: .semibold, design: .rounded))
+                        .foregroundColor(Color(hex: "7F8C8D"))
+                    Spacer()
+                }
+
+                Picker("Game Mode", selection: $gameMode) {
+                    Text("Ranked").tag("ranked")
+                    Text("Ladder").tag("ladder")
+                }
+                .pickerStyle(.segmented)
+                .colorMultiply(Color(hex: "4A90E2"))
             }
 
             VStack(spacing: 12) {
@@ -24,14 +45,14 @@ struct InputSectionView: View {
                     icon: "person.fill",
                     placeholder: "Player Name",
                     text: $playerName,
-                    accentColor: Color(hex: "FF8C00")
+                    accentColor: Color(hex: "4A90E2")
                 )
 
                 ModernTextField(
                     icon: "flag.fill",
                     placeholder: "Clan Name",
                     text: $clanName,
-                    accentColor: Color(hex: "3B7DD6")
+                    accentColor: Color(hex: "4A90E2")
                 )
             }
 
@@ -53,10 +74,10 @@ struct InputSectionView: View {
                 .background(
                     Group {
                         if isButtonDisabled {
-                            Color.gray.opacity(0.3)
+                            Color(hex: "BDC3C7")
                         } else {
                             LinearGradient(
-                                gradient: Gradient(colors: [Color(hex: "FF8C00"), Color(hex: "FFA500")]),
+                                gradient: Gradient(colors: [Color(hex: "4A90E2"), Color(hex: "5B9BD5")]),
                                 startPoint: .leading,
                                 endPoint: .trailing
                             )
@@ -66,7 +87,7 @@ struct InputSectionView: View {
                 .foregroundColor(.white)
                 .cornerRadius(14)
                 .shadow(
-                    color: isButtonDisabled ? .clear : Color(hex: "FF8C00").opacity(0.4),
+                    color: isButtonDisabled ? .clear : Color(hex: "4A90E2").opacity(0.3),
                     radius: 12,
                     x: 0,
                     y: 6
@@ -78,20 +99,9 @@ struct InputSectionView: View {
         .padding(20)
         .background(
             RoundedRectangle(cornerRadius: 20)
-                .fill(Color.white.opacity(0.05))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 20)
-                        .strokeBorder(
-                            LinearGradient(
-                                gradient: Gradient(colors: [Color.white.opacity(0.15), Color.white.opacity(0.05)]),
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            ),
-                            lineWidth: 1
-                        )
-                )
+                .fill(.white)
+                .shadow(color: Color.black.opacity(0.08), radius: 15, x: 0, y: 4)
         )
-        .shadow(color: .black.opacity(0.2), radius: 20, x: 0, y: 10)
         .padding(.horizontal, 20)
     }
 }

@@ -15,6 +15,7 @@ struct ContentView_Old: View {
     @State private var ocrText = "Tap to scan screenshot"
     @State private var playerName = ""
     @State private var clanName = ""
+    @State private var gameMode = "ranked"  // Default to ranked mode
     @State private var isLoading = false
     @State private var statusMessage = ""
 
@@ -46,6 +47,7 @@ struct ContentView_Old: View {
                         playerName: $playerName,
                         clanName: $clanName,
                         isLoading: $isLoading,
+                        gameMode: $gameMode,
                         onFindDecks: {
                             Task { await resolveAndPredict() }
                         }
@@ -134,10 +136,11 @@ struct ContentView_Old: View {
         }
 
         do {
-            // Call API
+            // Call API with selected game mode
             let (player, prediction) = try await APIService.shared.resolveAndPredict(
                 playerName: playerName,
-                clanName: clanName
+                clanName: clanName,
+                gameMode: gameMode
             )
 
             // Update UI with results
@@ -148,7 +151,8 @@ struct ContentView_Old: View {
 
                 // Check if no battles found
                 if prediction.top3.isEmpty {
-                    errorMessage = "Found \(player.name) but no recent ranked battles available"
+                    let modeName = gameMode == "ladder" ? "Ladder (Trophy Road)" : (gameMode == "ranked" ? "Ranked (Path of Legend)" : "")
+                    errorMessage = "Found \(player.name) but no \(modeName) battles available"
                     predictedDecks = []
                 }
             }

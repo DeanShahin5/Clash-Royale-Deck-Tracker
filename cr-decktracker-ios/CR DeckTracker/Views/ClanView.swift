@@ -112,13 +112,13 @@ struct ClanView: View {
 
     var body: some View {
         ZStack {
-            // Background - Clean dark theme
-            Color(hex: "0F1419")
+            // Background - Grey theme matching Scanner
+            Color(hex: "E5E7EB")
                 .ignoresSafeArea()
 
             ScrollView {
                 VStack(spacing: 24) {
-                    // Header
+                    // Header - Dark Blue section
                     VStack(spacing: 12) {
                         ZStack {
                             Circle()
@@ -138,24 +138,33 @@ struct ClanView: View {
                         Text("CLAN STATISTICS")
                             .font(.system(size: 11, weight: .bold, design: .rounded))
                             .tracking(2)
-                            .foregroundColor(.white.opacity(0.5))
+                            .foregroundColor(.white.opacity(0.8))
                     }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 30)
                     .padding(.top, 20)
+                    .background(
+                        LinearGradient(
+                            gradient: Gradient(colors: [Color(hex: "1e3a5f"), Color(hex: "0F1419")]),
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                    )
 
                     // Live Stats Info (removed time period selector - showing current week only)
                     HStack(spacing: 12) {
                         Image(systemName: "calendar")
-                            .foregroundColor(.white.opacity(0.6))
+                            .foregroundColor(Color(hex: "4A90E2"))
                             .font(.system(size: 14))
 
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Current Week Stats")
                                 .font(.system(size: 14, weight: .semibold, design: .rounded))
-                                .foregroundColor(.white)
+                                .foregroundColor(Color(hex: "2C3E50"))
 
                             Text("Live data from Supercell API")
                                 .font(.system(size: 11, weight: .medium, design: .rounded))
-                                .foregroundColor(.white.opacity(0.5))
+                                .foregroundColor(Color(hex: "7F8C8D"))
                         }
 
                         Spacer()
@@ -168,11 +177,8 @@ struct ClanView: View {
                     .padding(.vertical, 12)
                     .background(
                         RoundedRectangle(cornerRadius: 12)
-                            .fill(Color.white.opacity(0.05))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .strokeBorder(Color.white.opacity(0.1), lineWidth: 1)
-                            )
+                            .fill(.white)
+                            .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 2)
                     )
                     .padding(.horizontal, 20)
 
@@ -205,18 +211,25 @@ struct ClanView: View {
 
                             Text("No Clan Tag Found")
                                 .font(.system(size: 20, weight: .bold, design: .rounded))
-                                .foregroundColor(.white)
+                                .foregroundColor(Color(hex: "2C3E50"))
 
                             Text("Please sign up and add your clan tag to view clan statistics")
                                 .font(.system(size: 14, weight: .medium, design: .rounded))
-                                .foregroundColor(.white.opacity(0.6))
+                                .foregroundColor(Color(hex: "7F8C8D"))
                                 .multilineTextAlignment(.center)
                                 .padding(.horizontal, 40)
                         }
                         .padding(.vertical, 60)
+                        .padding(.horizontal, 20)
+                        .background(
+                            RoundedRectangle(cornerRadius: 20)
+                                .fill(.white)
+                                .shadow(color: Color.black.opacity(0.08), radius: 15, x: 0, y: 4)
+                        )
+                        .padding(.horizontal, 20)
                     } else if clanService.isLoading {
                         ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                            .progressViewStyle(CircularProgressViewStyle(tint: Color(hex: "4A90E2")))
                             .scaleEffect(1.5)
                             .padding(.vertical, 40)
                     } else if !clanService.errorMessage.isEmpty {
@@ -227,11 +240,11 @@ struct ClanView: View {
 
                             Text("Error Loading Stats")
                                 .font(.system(size: 18, weight: .bold, design: .rounded))
-                                .foregroundColor(.white)
+                                .foregroundColor(Color(hex: "2C3E50"))
 
                             Text(clanService.errorMessage)
                                 .font(.system(size: 14, weight: .medium, design: .rounded))
-                                .foregroundColor(.white.opacity(0.7))
+                                .foregroundColor(Color(hex: "7F8C8D"))
                                 .multilineTextAlignment(.center)
                                 .padding(.horizontal, 40)
 
@@ -252,6 +265,13 @@ struct ClanView: View {
                             }
                         }
                         .padding(.vertical, 40)
+                        .padding(.horizontal, 20)
+                        .background(
+                            RoundedRectangle(cornerRadius: 20)
+                                .fill(.white)
+                                .shadow(color: Color.black.opacity(0.08), radius: 15, x: 0, y: 4)
+                        )
+                        .padding(.horizontal, 20)
                     } else if clanService.clanStats != nil {
                         VStack(alignment: .leading, spacing: 16) {
                             // Table Header
@@ -271,7 +291,7 @@ struct ClanView: View {
                         VStack(spacing: 16) {
                             Text("No clan data loaded")
                                 .font(.system(size: 14, weight: .medium, design: .rounded))
-                                .foregroundColor(.white.opacity(0.5))
+                                .foregroundColor(Color(hex: "7F8C8D"))
 
                             Button(action: {
                                 Task { await loadClanStats() }
@@ -287,6 +307,13 @@ struct ClanView: View {
                             }
                         }
                         .padding(.vertical, 40)
+                        .padding(.horizontal, 20)
+                        .background(
+                            RoundedRectangle(cornerRadius: 20)
+                                .fill(.white)
+                                .shadow(color: Color.black.opacity(0.08), radius: 15, x: 0, y: 4)
+                        )
+                        .padding(.horizontal, 20)
                     }
 
                     Spacer(minLength: 40)
@@ -381,18 +408,18 @@ struct CategoryTab: View {
                 Text(category.rawValue)
                     .font(.system(size: 14, weight: .semibold, design: .rounded))
             }
-            .foregroundColor(isSelected ? .white : .white.opacity(0.6))
+            .foregroundColor(isSelected ? .white : Color(hex: "2C3E50"))
             .padding(.horizontal, 16)
             .padding(.vertical, 10)
             .background(
                 RoundedRectangle(cornerRadius: 10)
-                    .fill(isSelected ? accentColor : Color.white.opacity(0.05))
+                    .fill(isSelected ? accentColor : .white)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 10)
-                    .strokeBorder(isSelected ? accentColor : Color.white.opacity(0.1), lineWidth: 1)
+                    .strokeBorder(isSelected ? accentColor : Color(hex: "E0E6ED"), lineWidth: 1)
             )
-            .shadow(color: isSelected ? accentColor.opacity(0.3) : .clear, radius: 8, x: 0, y: 4)
+            .shadow(color: isSelected ? accentColor.opacity(0.3) : Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
         }
     }
 }
@@ -441,8 +468,11 @@ struct StatsTableHeader: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
-        .background(Color.white.opacity(0.05))
-        .cornerRadius(10)
+        .background(
+            RoundedRectangle(cornerRadius: 10)
+                .fill(.white)
+                .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 2)
+        )
     }
 }
 
@@ -455,7 +485,7 @@ struct StatsTableRow: View {
             // Name (always first)
             Text(member.name)
                 .font(.system(size: 13, weight: .semibold, design: .rounded))
-                .foregroundColor(.white)
+                .foregroundColor(Color(hex: "2C3E50"))
                 .lineLimit(1)
                 .frame(minWidth: 100, alignment: .leading)
 
@@ -464,12 +494,12 @@ struct StatsTableRow: View {
             case .donations:
                 Text("\(member.donations)")
                     .font(.system(size: 12, weight: .medium, design: .rounded))
-                    .foregroundColor(.white.opacity(0.8))
+                    .foregroundColor(Color(hex: "7F8C8D"))
                     .frame(maxWidth: .infinity)
 
                 Text("\(member.donations_received)")
                     .font(.system(size: 12, weight: .medium, design: .rounded))
-                    .foregroundColor(.white.opacity(0.8))
+                    .foregroundColor(Color(hex: "7F8C8D"))
                     .frame(maxWidth: .infinity)
 
                 Text("\(member.totalDonations)")
@@ -480,23 +510,23 @@ struct StatsTableRow: View {
             case .war:
                 Text("\(member.war_attacks)")
                     .font(.system(size: 12, weight: .medium, design: .rounded))
-                    .foregroundColor(.white.opacity(0.8))
+                    .foregroundColor(Color(hex: "7F8C8D"))
                     .frame(maxWidth: .infinity)
 
                 Text("\(member.total_war_attacks)")
                     .font(.system(size: 12, weight: .medium, design: .rounded))
-                    .foregroundColor(.white.opacity(0.8))
+                    .foregroundColor(Color(hex: "7F8C8D"))
                     .frame(maxWidth: .infinity)
 
                 Text(String(format: "%.0f%%", member.warParticipationRate * 100))
                     .font(.system(size: 12, weight: .bold, design: .rounded))
-                    .foregroundColor(member.warParticipationRate >= 0.75 ? Color(hex: "00d4aa") : .white.opacity(0.8))
+                    .foregroundColor(member.warParticipationRate >= 0.75 ? Color(hex: "00d4aa") : Color(hex: "7F8C8D"))
                     .frame(maxWidth: .infinity)
 
             case .battles:
                 Text("\(member.battles)")
                     .font(.system(size: 12, weight: .medium, design: .rounded))
-                    .foregroundColor(.white.opacity(0.8))
+                    .foregroundColor(Color(hex: "7F8C8D"))
                     .frame(maxWidth: .infinity)
 
                 Text("\(member.wins)")
@@ -512,7 +542,7 @@ struct StatsTableRow: View {
             case .ranked:
                 Text("\(member.ranked_battles)")
                     .font(.system(size: 12, weight: .medium, design: .rounded))
-                    .foregroundColor(.white.opacity(0.8))
+                    .foregroundColor(Color(hex: "7F8C8D"))
                     .frame(maxWidth: .infinity)
 
                 Text("\(member.ranked_wins)")
@@ -528,7 +558,7 @@ struct StatsTableRow: View {
             case .ladder:
                 Text("\(member.ladder_battles)")
                     .font(.system(size: 12, weight: .medium, design: .rounded))
-                    .foregroundColor(.white.opacity(0.8))
+                    .foregroundColor(Color(hex: "7F8C8D"))
                     .frame(maxWidth: .infinity)
 
                 Text("\(member.ladder_wins)")
@@ -546,11 +576,8 @@ struct StatsTableRow: View {
         .padding(.vertical, 14)
         .background(
             RoundedRectangle(cornerRadius: 10)
-                .fill(Color.white.opacity(0.03))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 10)
-                        .strokeBorder(Color.white.opacity(0.05), lineWidth: 1)
-                )
+                .fill(.white)
+                .shadow(color: Color.black.opacity(0.05), radius: 6, x: 0, y: 2)
         )
     }
 }
@@ -574,7 +601,7 @@ struct SortableHeaderButton: View {
             HStack(spacing: 4) {
                 Text(title)
                     .font(.system(size: 11, weight: .bold, design: .rounded))
-                    .foregroundColor(currentField == field ? accentColor : .white.opacity(0.7))
+                    .foregroundColor(currentField == field ? accentColor : Color(hex: "7F8C8D"))
 
                 if currentField == field {
                     Image(systemName: ascending ? "chevron.up" : "chevron.down")

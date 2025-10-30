@@ -22,15 +22,9 @@ struct LoginView: View {
         VStack(spacing: 12) {
             ZStack {
                 Circle()
-                    .fill(
-                        LinearGradient(
-                            gradient: Gradient(colors: [Color(hex: "FF8C00"), Color(hex: "FFA500")]),
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
+                    .fill(Color(hex: "4A90E2"))
                     .frame(width: 70, height: 70)
-                    .shadow(color: Color(hex: "FF8C00").opacity(0.5), radius: 20, x: 0, y: 10)
+                    .shadow(color: Color(hex: "4A90E2").opacity(0.4), radius: 15, x: 0, y: 5)
 
                 Image(systemName: "person.circle.fill")
                     .font(.system(size: 36, weight: .bold))
@@ -43,32 +37,41 @@ struct LoginView: View {
 
             Text(isSignUpMode ? "Create your account" : "Welcome back")
                 .font(.system(size: 14, weight: .medium, design: .rounded))
-                .foregroundColor(.white.opacity(0.6))
+                .foregroundColor(.white.opacity(0.8))
         }
-        .padding(.top, 40)
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 30)
+        .padding(.top, 20)
+        .background(
+            LinearGradient(
+                gradient: Gradient(colors: [Color(hex: "1e3a5f"), Color(hex: "0F1419")]),
+                startPoint: .top,
+                endPoint: .bottom
+            )
+        )
     }
 
     private var passwordField: some View {
         VStack(alignment: .leading, spacing: 14) {
             HStack(spacing: 14) {
                 Image(systemName: "lock.fill")
-                    .foregroundColor(.white.opacity(0.5))
+                    .foregroundColor(Color(hex: "7F8C8D"))
                     .font(.system(size: 16, weight: .semibold))
                     .frame(width: 22)
 
-                SecureField("", text: $password, prompt: Text("Password").foregroundColor(.white.opacity(0.4)))
-                    .foregroundColor(.white)
+                SecureField("", text: $password, prompt: Text("Password").foregroundColor(Color(hex: "95A5A6")))
+                    .foregroundColor(Color(hex: "2C3E50"))
                     .font(.system(size: 16, weight: .medium, design: .rounded))
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 14)
-            .background(Color.black.opacity(0.25))
+            .background(Color(hex: "F5F7FA"))
             .cornerRadius(12)
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
-                    .strokeBorder(Color.white.opacity(0.15), lineWidth: 1)
+                    .strokeBorder(Color(hex: "E0E6ED"), lineWidth: 1)
             )
         }
     }
@@ -77,23 +80,23 @@ struct LoginView: View {
         VStack(alignment: .leading, spacing: 14) {
             HStack(spacing: 14) {
                 Image(systemName: "lock.fill")
-                    .foregroundColor(.white.opacity(0.5))
+                    .foregroundColor(Color(hex: "7F8C8D"))
                     .font(.system(size: 16, weight: .semibold))
                     .frame(width: 22)
 
-                SecureField("", text: $confirmPassword, prompt: Text("Confirm Password").foregroundColor(.white.opacity(0.4)))
-                    .foregroundColor(.white)
+                SecureField("", text: $confirmPassword, prompt: Text("Confirm Password").foregroundColor(Color(hex: "95A5A6")))
+                    .foregroundColor(Color(hex: "2C3E50"))
                     .font(.system(size: 16, weight: .medium, design: .rounded))
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 14)
-            .background(Color.black.opacity(0.25))
+            .background(Color(hex: "F5F7FA"))
             .cornerRadius(12)
             .overlay(
                 RoundedRectangle(cornerRadius: 12)
-                    .strokeBorder(Color.white.opacity(0.15), lineWidth: 1)
+                    .strokeBorder(Color(hex: "E0E6ED"), lineWidth: 1)
             )
         }
     }
@@ -118,14 +121,14 @@ struct LoginView: View {
             .padding(.vertical, 16)
             .background(
                 LinearGradient(
-                    gradient: Gradient(colors: [Color(hex: "FF8C00"), Color(hex: "FFA500")]),
+                    gradient: Gradient(colors: [Color(hex: "4A90E2"), Color(hex: "5B9BD5")]),
                     startPoint: .leading,
                     endPoint: .trailing
                 )
             )
             .foregroundColor(.white)
             .cornerRadius(14)
-            .shadow(color: Color(hex: "FF8C00").opacity(0.4), radius: 12, x: 0, y: 6)
+            .shadow(color: Color(hex: "4A90E2").opacity(0.3), radius: 12, x: 0, y: 6)
         }
         .disabled(isLoading || !isFormValid)
         .opacity((isLoading || !isFormValid) ? 0.6 : 1.0)
@@ -133,30 +136,22 @@ struct LoginView: View {
 
     var body: some View {
         ZStack {
-            // Background
-            LinearGradient(
-                gradient: Gradient(colors: [
-                    Color(hex: "1e2a50"),
-                    Color(hex: "1f2d5c"),
-                    Color(hex: "1a2345")
-                ]),
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .ignoresSafeArea()
+            // Background - Grey theme matching Scanner
+            Color(hex: "E5E7EB")
+                .ignoresSafeArea()
 
             ScrollView {
                 VStack(spacing: 24) {
                     headerView
 
-                    // Form
+                    // Form Card
                     VStack(spacing: 16) {
                         // Email
                         ModernTextField(
                             icon: "envelope.fill",
                             placeholder: "Email",
                             text: $email,
-                            accentColor: Color(hex: "FF8C00")
+                            accentColor: Color(hex: "4A90E2")
                         )
 
                         // Password
@@ -173,24 +168,30 @@ struct LoginView: View {
                                 icon: "number",
                                 placeholder: "Player Tag (Optional)",
                                 text: $playerTag,
-                                accentColor: Color(hex: "3B7DD6")
+                                accentColor: Color(hex: "4A90E2")
                             )
 
                             ModernTextField(
                                 icon: "flag.fill",
                                 placeholder: "Clan Tag (Optional)",
                                 text: $clanTag,
-                                accentColor: Color(hex: "8E44AD")
+                                accentColor: Color(hex: "4A90E2")
                             )
                         }
 
                         // Error message
                         if !errorMessage.isEmpty {
-                            Text(errorMessage)
-                                .font(.system(size: 13, weight: .medium, design: .rounded))
-                                .foregroundColor(Color(hex: "ff6b6b"))
-                                .multilineTextAlignment(.center)
-                                .padding(.horizontal, 16)
+                            HStack(spacing: 8) {
+                                Image(systemName: "exclamationmark.circle.fill")
+                                    .foregroundColor(Color(hex: "ff6b6b"))
+                                Text(errorMessage)
+                                    .font(.system(size: 13, weight: .medium, design: .rounded))
+                                    .foregroundColor(Color(hex: "2C3E50"))
+                            }
+                            .padding(12)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(Color(hex: "ff6b6b").opacity(0.1))
+                            .cornerRadius(10)
                         }
 
                         // Submit button
@@ -206,9 +207,9 @@ struct LoginView: View {
                         }) {
                             HStack(spacing: 4) {
                                 Text(isSignUpMode ? "Already have an account?" : "Don't have an account?")
-                                    .foregroundColor(.white.opacity(0.6))
+                                    .foregroundColor(Color(hex: "7F8C8D"))
                                 Text(isSignUpMode ? "Login" : "Sign Up")
-                                    .foregroundColor(Color(hex: "FF8C00"))
+                                    .foregroundColor(Color(hex: "4A90E2"))
                                     .fontWeight(.bold)
                             }
                             .font(.system(size: 14, design: .rounded))
@@ -219,11 +220,8 @@ struct LoginView: View {
                     .padding(.vertical, 24)
                     .background(
                         RoundedRectangle(cornerRadius: 20)
-                            .fill(Color.white.opacity(0.05))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 20)
-                                    .strokeBorder(Color.white.opacity(0.1), lineWidth: 1)
-                            )
+                            .fill(.white)
+                            .shadow(color: Color.black.opacity(0.08), radius: 15, x: 0, y: 4)
                     )
                     .padding(.horizontal, 20)
 

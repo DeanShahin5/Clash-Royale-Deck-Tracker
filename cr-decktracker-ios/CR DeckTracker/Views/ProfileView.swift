@@ -6,19 +6,19 @@ struct ProfileView: View {
 
     var body: some View {
         ZStack {
-            // Background - Clean dark theme
-            Color(hex: "0F1419")
+            // Background - Grey theme matching Scanner and Clan
+            Color(hex: "E5E7EB")
                 .ignoresSafeArea()
 
             ScrollView {
                 VStack(spacing: 24) {
-                    // Header
+                    // Header - Dark Blue section
                     VStack(spacing: 12) {
                         ZStack {
                             Circle()
-                                .fill(Color(hex: "A569BD"))
+                                .fill(Color(hex: "4A90E2"))
                                 .frame(width: 70, height: 70)
-                                .shadow(color: Color(hex: "A569BD").opacity(0.4), radius: 15, x: 0, y: 5)
+                                .shadow(color: Color(hex: "4A90E2").opacity(0.4), radius: 15, x: 0, y: 5)
 
                             Image(systemName: "person.fill")
                                 .font(.system(size: 32, weight: .bold))
@@ -34,15 +34,15 @@ struct ProfileView: View {
                                 Text("Level \(playerStats.level)")
                                     .font(.system(size: 11, weight: .bold, design: .rounded))
                                     .tracking(2)
-                                    .foregroundColor(.white.opacity(0.6))
+                                    .foregroundColor(.white.opacity(0.8))
 
                                 Text("•")
-                                    .foregroundColor(.white.opacity(0.4))
+                                    .foregroundColor(.white.opacity(0.6))
 
                                 Text(playerStats.arena.uppercased())
                                     .font(.system(size: 11, weight: .bold, design: .rounded))
                                     .tracking(2)
-                                    .foregroundColor(.white.opacity(0.6))
+                                    .foregroundColor(.white.opacity(0.8))
                             }
                         } else {
                             Text("My Profile")
@@ -52,24 +52,46 @@ struct ProfileView: View {
                             Text("PLAYER STATISTICS")
                                 .font(.system(size: 11, weight: .bold, design: .rounded))
                                 .tracking(2)
-                                .foregroundColor(.white.opacity(0.5))
+                                .foregroundColor(.white.opacity(0.8))
                         }
                     }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 30)
                     .padding(.top, 20)
+                    .background(
+                        LinearGradient(
+                            gradient: Gradient(colors: [Color(hex: "1e3a5f"), Color(hex: "0F1419")]),
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                    )
 
                     // Loading or error state
                     if playerService.isLoading {
                         ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                            .progressViewStyle(CircularProgressViewStyle(tint: Color(hex: "4A90E2")))
                             .scaleEffect(1.5)
                             .padding(.vertical, 40)
                     } else if !playerService.errorMessage.isEmpty {
-                        Text(playerService.errorMessage)
-                            .font(.system(size: 14, weight: .medium, design: .rounded))
-                            .foregroundColor(Color(hex: "ff6b6b"))
-                            .multilineTextAlignment(.center)
-                            .padding(.vertical, 40)
-                            .padding(.horizontal, 20)
+                        VStack(spacing: 16) {
+                            Image(systemName: "exclamationmark.circle.fill")
+                                .font(.system(size: 48))
+                                .foregroundColor(Color(hex: "ff6b6b"))
+
+                            Text(playerService.errorMessage)
+                                .font(.system(size: 14, weight: .medium, design: .rounded))
+                                .foregroundColor(Color(hex: "2C3E50"))
+                                .multilineTextAlignment(.center)
+                                .padding(.horizontal, 40)
+                        }
+                        .padding(.vertical, 40)
+                        .padding(.horizontal, 20)
+                        .background(
+                            RoundedRectangle(cornerRadius: 20)
+                                .fill(.white)
+                                .shadow(color: Color.black.opacity(0.08), radius: 15, x: 0, y: 4)
+                        )
+                        .padding(.horizontal, 20)
                     } else if let stats = playerService.playerStats {
                         // Player Stats Card
                         VStack(alignment: .leading, spacing: 16) {
@@ -79,7 +101,7 @@ struct ProfileView: View {
                                     .shadow(color: Color(hex: "4A90E2").opacity(0.5), radius: 8, x: 0, y: 2)
                                 Text("Player Stats")
                                     .font(.system(size: 16, weight: .bold, design: .rounded))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(Color(hex: "2C3E50"))
                                 Spacer()
                             }
 
@@ -93,11 +115,8 @@ struct ProfileView: View {
                         .padding(20)
                         .background(
                             RoundedRectangle(cornerRadius: 20)
-                                .fill(Color.white.opacity(0.05))
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 20)
-                                        .strokeBorder(Color.white.opacity(0.1), lineWidth: 1)
-                                )
+                                .fill(.white)
+                                .shadow(color: Color.black.opacity(0.08), radius: 15, x: 0, y: 4)
                         )
                         .padding(.horizontal, 20)
 
@@ -109,7 +128,7 @@ struct ProfileView: View {
                                     .shadow(color: Color(hex: "E74C3C").opacity(0.5), radius: 8, x: 0, y: 2)
                                 Text("Battle Stats")
                                     .font(.system(size: 16, weight: .bold, design: .rounded))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(Color(hex: "2C3E50"))
                                 Spacer()
                             }
 
@@ -121,11 +140,8 @@ struct ProfileView: View {
                         .padding(20)
                         .background(
                             RoundedRectangle(cornerRadius: 20)
-                                .fill(Color.white.opacity(0.05))
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 20)
-                                        .strokeBorder(Color.white.opacity(0.1), lineWidth: 1)
-                                )
+                                .fill(.white)
+                                .shadow(color: Color.black.opacity(0.08), radius: 15, x: 0, y: 4)
                         )
                         .padding(.horizontal, 20)
 
@@ -137,14 +153,14 @@ struct ProfileView: View {
                                     .shadow(color: Color(hex: "3498DB").opacity(0.5), radius: 8, x: 0, y: 2)
                                 Text("Recent Matches")
                                     .font(.system(size: 16, weight: .bold, design: .rounded))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(Color(hex: "2C3E50"))
                                 Spacer()
                             }
 
                             if stats.recent_battles.isEmpty {
                                 Text("No recent battles")
                                     .font(.system(size: 14, weight: .medium, design: .rounded))
-                                    .foregroundColor(.white.opacity(0.5))
+                                    .foregroundColor(Color(hex: "7F8C8D"))
                                     .frame(maxWidth: .infinity, alignment: .center)
                                     .padding(.vertical, 30)
                             } else {
@@ -158,11 +174,8 @@ struct ProfileView: View {
                         .padding(20)
                         .background(
                             RoundedRectangle(cornerRadius: 20)
-                                .fill(Color.white.opacity(0.05))
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 20)
-                                        .strokeBorder(Color.white.opacity(0.1), lineWidth: 1)
-                                )
+                                .fill(.white)
+                                .shadow(color: Color.black.opacity(0.08), radius: 15, x: 0, y: 4)
                         )
                         .padding(.horizontal, 20)
 
@@ -174,14 +187,14 @@ struct ProfileView: View {
                                     .shadow(color: Color(hex: "A569BD").opacity(0.5), radius: 8, x: 0, y: 2)
                                 Text("Most Used Decks")
                                     .font(.system(size: 16, weight: .bold, design: .rounded))
-                                    .foregroundColor(.white)
+                                    .foregroundColor(Color(hex: "2C3E50"))
                                 Spacer()
                             }
 
                             if stats.top_decks.isEmpty {
                                 Text("No ranked battles yet")
                                     .font(.system(size: 14, weight: .medium, design: .rounded))
-                                    .foregroundColor(.white.opacity(0.5))
+                                    .foregroundColor(Color(hex: "7F8C8D"))
                                     .frame(maxWidth: .infinity, alignment: .center)
                                     .padding(.vertical, 30)
                             } else {
@@ -195,25 +208,33 @@ struct ProfileView: View {
                         .padding(20)
                         .background(
                             RoundedRectangle(cornerRadius: 20)
-                                .fill(Color.white.opacity(0.05))
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 20)
-                                        .strokeBorder(Color.white.opacity(0.1), lineWidth: 1)
-                                )
+                                .fill(.white)
+                                .shadow(color: Color.black.opacity(0.08), radius: 15, x: 0, y: 4)
                         )
                         .padding(.horizontal, 20)
                     } else {
                         // No player tag set
                         VStack(spacing: 16) {
+                            Image(systemName: "exclamationmark.triangle.fill")
+                                .font(.system(size: 48))
+                                .foregroundColor(Color(hex: "FF8C00"))
+
                             Text("No player tag found")
                                 .font(.system(size: 14, weight: .medium, design: .rounded))
-                                .foregroundColor(.white.opacity(0.5))
+                                .foregroundColor(Color(hex: "2C3E50"))
 
                             Text("Set your player tag in account settings")
                                 .font(.system(size: 12, weight: .medium, design: .rounded))
-                                .foregroundColor(.white.opacity(0.4))
+                                .foregroundColor(Color(hex: "7F8C8D"))
                         }
                         .padding(.vertical, 40)
+                        .padding(.horizontal, 20)
+                        .background(
+                            RoundedRectangle(cornerRadius: 20)
+                                .fill(.white)
+                                .shadow(color: Color.black.opacity(0.08), radius: 15, x: 0, y: 4)
+                        )
+                        .padding(.horizontal, 20)
                     }
 
                     Spacer(minLength: 40)
@@ -239,19 +260,19 @@ struct StatRow: View {
     var body: some View {
         HStack {
             Image(systemName: icon)
-                .foregroundColor(.white.opacity(0.6))
+                .foregroundColor(Color(hex: "7F8C8D"))
                 .font(.system(size: 14))
                 .frame(width: 20)
 
             Text(label)
                 .font(.system(size: 14, weight: .medium, design: .rounded))
-                .foregroundColor(.white.opacity(0.7))
+                .foregroundColor(Color(hex: "7F8C8D"))
 
             Spacer()
 
             Text(value)
                 .font(.system(size: 14, weight: .bold, design: .rounded))
-                .foregroundColor(.white)
+                .foregroundColor(Color(hex: "2C3E50"))
         }
     }
 }
@@ -270,13 +291,13 @@ struct BattleStatBox: View {
             Text(label)
                 .font(.system(size: 11, weight: .bold, design: .rounded))
                 .tracking(1)
-                .foregroundColor(.white.opacity(0.6))
+                .foregroundColor(Color(hex: "7F8C8D"))
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 20)
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .fill(Color.white.opacity(0.05))
+                .fill(Color(hex: "F5F7FA"))
         )
     }
 }
@@ -313,12 +334,12 @@ struct BattleRow: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text(battle.formattedType)
                         .font(.system(size: 14, weight: .bold, design: .rounded))
-                        .foregroundColor(.white)
+                        .foregroundColor(Color(hex: "2C3E50"))
 
                     if let arena = battle.arena {
                         Text(arena)
                             .font(.system(size: 11, weight: .medium, design: .rounded))
-                            .foregroundColor(.white.opacity(0.5))
+                            .foregroundColor(Color(hex: "7F8C8D"))
                     }
                 }
 
@@ -327,7 +348,7 @@ struct BattleRow: View {
                 VStack(alignment: .trailing, spacing: 4) {
                     Text("\(battle.crowns) - \(battle.opponent_crowns)")
                         .font(.system(size: 16, weight: .black, design: .rounded))
-                        .foregroundColor(.white)
+                        .foregroundColor(Color(hex: "2C3E50"))
 
                     if let result = battle.result {
                         Text(result.uppercased())
@@ -342,11 +363,11 @@ struct BattleRow: View {
                 if let opponentName = battle.opponent_name {
                     Image(systemName: "person.fill")
                         .font(.system(size: 10))
-                        .foregroundColor(.white.opacity(0.4))
+                        .foregroundColor(Color(hex: "7F8C8D"))
 
                     Text(opponentName)
                         .font(.system(size: 12, weight: .medium, design: .rounded))
-                        .foregroundColor(.white.opacity(0.7))
+                        .foregroundColor(Color(hex: "7F8C8D"))
                         .lineLimit(1)
                 }
 
@@ -360,15 +381,15 @@ struct BattleRow: View {
 
                         Text("\(playerTrophies)")
                             .font(.system(size: 11, weight: .semibold, design: .rounded))
-                            .foregroundColor(.white.opacity(0.7))
+                            .foregroundColor(Color(hex: "7F8C8D"))
 
                         Text("vs")
                             .font(.system(size: 10, weight: .medium, design: .rounded))
-                            .foregroundColor(.white.opacity(0.4))
+                            .foregroundColor(Color(hex: "95A5A6"))
 
                         Text("\(opponentTrophies)")
                             .font(.system(size: 11, weight: .semibold, design: .rounded))
-                            .foregroundColor(.white.opacity(0.7))
+                            .foregroundColor(Color(hex: "7F8C8D"))
                     }
                 }
             }
@@ -376,14 +397,14 @@ struct BattleRow: View {
             // Time
             Text(battle.formattedTime)
                 .font(.system(size: 10, weight: .medium, design: .rounded))
-                .foregroundColor(.white.opacity(0.4))
+                .foregroundColor(Color(hex: "95A5A6"))
                 .frame(maxWidth: .infinity, alignment: .trailing)
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 12)
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .fill(Color.white.opacity(0.05))
+                .fill(Color(hex: "F5F7FA"))
                 .overlay(
                     RoundedRectangle(cornerRadius: 12)
                         .strokeBorder(resultColor.opacity(0.2), lineWidth: 1)
@@ -401,13 +422,13 @@ struct DeckUsageRow: View {
             HStack {
                 Text("#\(rank)")
                     .font(.system(size: 16, weight: .black, design: .rounded))
-                    .foregroundColor(.white)
+                    .foregroundColor(Color(hex: "2C3E50"))
 
                 Spacer()
 
                 Text("\(Int(deck.confidence * 100))% usage")
                     .font(.system(size: 12, weight: .bold, design: .rounded))
-                    .foregroundColor(.white.opacity(0.6))
+                    .foregroundColor(Color(hex: "7F8C8D"))
             }
 
             // Display deck cards in a grid
@@ -416,11 +437,11 @@ struct DeckUsageRow: View {
                     VStack(spacing: 4) {
                         Text(String(card.prefix(2)))
                             .font(.system(size: 10, weight: .bold, design: .rounded))
-                            .foregroundColor(.white)
+                            .foregroundColor(Color(hex: "2C3E50"))
                             .frame(width: 40, height: 40)
                             .background(
                                 RoundedRectangle(cornerRadius: 8)
-                                    .fill(Color.white.opacity(0.1))
+                                    .fill(Color(hex: "E0E6ED"))
                             )
                     }
                 }
@@ -429,7 +450,7 @@ struct DeckUsageRow: View {
         .padding(16)
         .background(
             RoundedRectangle(cornerRadius: 12)
-                .fill(Color.white.opacity(0.03))
+                .fill(Color(hex: "F5F7FA"))
         )
     }
 }

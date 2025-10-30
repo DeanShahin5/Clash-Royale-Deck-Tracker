@@ -17,11 +17,11 @@ struct ErrorView: View {
 
             Text("Something went wrong")
                 .font(.system(size: 18, weight: .bold, design: .rounded))
-                .foregroundColor(.white)
+                .foregroundColor(Color(hex: "2C3E50"))
 
             Text(errorMessage)
                 .font(.system(size: 14, weight: .medium, design: .rounded))
-                .foregroundColor(.white.opacity(0.7))
+                .foregroundColor(Color(hex: "7F8C8D"))
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 20)
         }
@@ -30,7 +30,7 @@ struct ErrorView: View {
         .padding(.horizontal, 20)
         .background(
             RoundedRectangle(cornerRadius: 20)
-                .fill(Color.white.opacity(0.05))
+                .fill(.white)
                 .overlay(
                     RoundedRectangle(cornerRadius: 20)
                         .strokeBorder(

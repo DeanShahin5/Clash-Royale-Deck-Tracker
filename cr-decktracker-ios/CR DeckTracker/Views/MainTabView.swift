@@ -4,6 +4,7 @@ import PhotosUI
 struct MainTabView: View {
     @State private var selectedTab = 1 // Start with Scanner tab (center)
     @State private var showLoginSheet = false
+    @State private var showAccountDetails = false
     @StateObject private var authService = AuthService.shared
 
     var body: some View {
@@ -35,7 +36,7 @@ struct MainTabView: View {
             // Profile Icon Button (Top-Right)
             Button(action: {
                 if authService.isLoggedIn {
-                    // TODO: Show profile menu
+                    showAccountDetails = true
                 } else {
                     showLoginSheet = true
                 }
@@ -69,6 +70,9 @@ struct MainTabView: View {
         .sheet(isPresented: $showLoginSheet) {
             LoginView()
         }
+        .sheet(isPresented: $showAccountDetails) {
+            AccountDetailsView()
+        }
     }
 }
 
@@ -79,6 +83,7 @@ struct ScannerView: View {
     @State private var ocrText = "Tap to scan screenshot"
     @State private var playerName = ""
     @State private var clanName = ""
+    @State private var gameMode = "ranked"  // Default to ranked mode
     @State private var isLoading = false
     @State private var statusMessage = ""
 
@@ -110,6 +115,7 @@ struct ScannerView: View {
                         playerName: $playerName,
                         clanName: $clanName,
                         isLoading: $isLoading,
+                        gameMode: $gameMode,
                         onFindDecks: {
                             Task { await resolveAndPredict() }
                         }
@@ -141,9 +147,9 @@ struct ScannerView: View {
     private var backgroundGradient: some View {
         LinearGradient(
             gradient: Gradient(colors: [
-                Color(hex: "1e2a50"),
-                Color(hex: "1f2d5c"),
-                Color(hex: "1a2345")
+                Color(hex: "E5E7EB"),
+                Color(hex: "D1D5DB"),
+                Color(hex: "E5E7EB")
             ]),
             startPoint: .topLeading,
             endPoint: .bottomTrailing
@@ -198,10 +204,11 @@ struct ScannerView: View {
         }
 
         do {
-            // Call API
+            // Call API with selected game mode
             let (player, prediction) = try await APIService.shared.resolveAndPredict(
                 playerName: playerName,
-                clanName: clanName
+                clanName: clanName,
+                gameMode: gameMode
             )
 
             // Update UI with results
@@ -212,7 +219,8 @@ struct ScannerView: View {
 
                 // Check if no battles found
                 if prediction.top3.isEmpty {
-                    errorMessage = "Found \(player.name) but no recent ranked battles available"
+                    let modeName = gameMode == "ladder" ? "Ladder (Trophy Road)" : (gameMode == "ranked" ? "Ranked (Path of Legend)" : "")
+                    errorMessage = "Found \(player.name) but no \(modeName) battles available"
                     predictedDecks = []
                 }
             }

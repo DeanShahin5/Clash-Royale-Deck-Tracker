@@ -7,14 +7,14 @@ struct LoadingView: View {
         VStack(spacing: 20) {
             ZStack {
                 Circle()
-                    .stroke(Color.white.opacity(0.1), lineWidth: 8)
+                    .stroke(Color(hex: "E0E6ED"), lineWidth: 8)
                     .frame(width: 80, height: 80)
 
                 Circle()
                     .trim(from: 0, to: 0.7)
                     .stroke(
                         LinearGradient(
-                            gradient: Gradient(colors: [Color(hex: "3B7DD6"), Color(hex: "5B9BD5")]),
+                            gradient: Gradient(colors: [Color(hex: "4A90E2"), Color(hex: "5B9BD5")]),
                             startPoint: .leading,
                             endPoint: .trailing
                         ),
@@ -28,7 +28,7 @@ struct LoadingView: View {
                     .font(.system(size: 28))
                     .foregroundStyle(
                         LinearGradient(
-                            gradient: Gradient(colors: [Color(hex: "3B7DD6"), Color(hex: "5B9BD5")]),
+                            gradient: Gradient(colors: [Color(hex: "4A90E2"), Color(hex: "5B9BD5")]),
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
                         )
@@ -38,11 +38,11 @@ struct LoadingView: View {
             VStack(spacing: 6) {
                 Text("Analyzing Battles")
                     .font(.system(size: 18, weight: .bold, design: .rounded))
-                    .foregroundColor(.white)
+                    .foregroundColor(Color(hex: "2C3E50"))
 
                 Text(statusMessage.isEmpty ? "Searching player..." : statusMessage)
                     .font(.system(size: 14, weight: .medium, design: .rounded))
-                    .foregroundColor(.white.opacity(0.6))
+                    .foregroundColor(Color(hex: "7F8C8D"))
                     .multilineTextAlignment(.center)
             }
         }
@@ -51,18 +51,8 @@ struct LoadingView: View {
         .padding(.horizontal, 20)
         .background(
             RoundedRectangle(cornerRadius: 20)
-                .fill(Color.white.opacity(0.05))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 20)
-                        .strokeBorder(
-                            LinearGradient(
-                                gradient: Gradient(colors: [Color(hex: "3B7DD6").opacity(0.3), Color(hex: "5B9BD5").opacity(0.3)]),
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            ),
-                            lineWidth: 1
-                        )
-                )
+                .fill(.white)
+                .shadow(color: Color.black.opacity(0.08), radius: 15, x: 0, y: 4)
         )
         .padding(.horizontal, 20)
         .transition(.scale.combined(with: .opacity))

@@ -11,14 +11,14 @@ struct OCRSectionView: View {
             HStack {
                 Label("Screenshot Scanner", systemImage: "camera.viewfinder")
                     .font(.system(size: 16, weight: .bold, design: .rounded))
-                    .foregroundColor(.white)
+                    .foregroundColor(Color(hex: "2C3E50"))
                 Spacer()
             }
 
-            // Interactive Scan Zone - Reduced Size
+            // Interactive Scan Zone - 80% Size
             PhotosPicker(selection: $item, matching: .images) {
-                VStack(spacing: 12) {
-                    // Camera Icon
+                VStack(spacing: 10) {
+                    // Camera Icon (80% of 56 = 44.8)
                     ZStack {
                         Circle()
                             .fill(
@@ -28,32 +28,32 @@ struct OCRSectionView: View {
                                     endPoint: .bottomTrailing
                                 )
                             )
-                            .frame(width: 56, height: 56)
-                            .shadow(color: Color(hex: "4A90E2").opacity(0.5), radius: 12, x: 0, y: 6)
+                            .frame(width: 45, height: 45)
+                            .shadow(color: Color(hex: "4A90E2").opacity(0.3), radius: 6, x: 0, y: 3)
 
                         Image(systemName: "camera.fill")
-                            .font(.system(size: 26, weight: .bold))
+                            .font(.system(size: 21, weight: .bold))
                             .foregroundColor(.white)
                     }
 
-                    VStack(spacing: 4) {
+                    VStack(spacing: 3) {
                         Text("Tap to Scan")
-                            .font(.system(size: 16, weight: .bold, design: .rounded))
-                            .foregroundColor(.white)
+                            .font(.system(size: 13, weight: .bold, design: .rounded))
+                            .foregroundColor(Color(hex: "2C3E50"))
 
                         Text("Select a screenshot")
-                            .font(.system(size: 12, weight: .medium, design: .rounded))
-                            .foregroundColor(.white.opacity(0.6))
+                            .font(.system(size: 10, weight: .medium, design: .rounded))
+                            .foregroundColor(Color(hex: "7F8C8D"))
                     }
                 }
                 .frame(maxWidth: .infinity)
-                .padding(.vertical, 24)
-                .background(Color.black.opacity(0.3))
-                .cornerRadius(14)
+                .padding(.vertical, 19)
+                .background(Color(hex: "F5F7FA"))
+                .cornerRadius(11)
                 .overlay(
-                    RoundedRectangle(cornerRadius: 14)
+                    RoundedRectangle(cornerRadius: 11)
                         .strokeBorder(
-                            style: StrokeStyle(lineWidth: 2, dash: [8, 6])
+                            style: StrokeStyle(lineWidth: 1.6, dash: [6.4, 4.8])
                         )
                         .foregroundStyle(
                             LinearGradient(
@@ -71,24 +71,24 @@ struct OCRSectionView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     HStack {
                         Image(systemName: "text.viewfinder")
-                            .foregroundColor(Color(hex: "3B7DD6"))
+                            .foregroundColor(Color(hex: "4A90E2"))
                             .font(.system(size: 14))
                         Text("Scanned Text")
                             .font(.system(size: 12, weight: .semibold, design: .rounded))
-                            .foregroundColor(.white.opacity(0.6))
+                            .foregroundColor(Color(hex: "7F8C8D"))
                         Spacer()
                     }
 
                     Text(ocrText)
                         .font(.system(size: 15, weight: .medium, design: .rounded))
-                        .foregroundColor(.white)
+                        .foregroundColor(Color(hex: "2C3E50"))
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(14)
-                        .background(Color.black.opacity(0.3))
+                        .background(Color(hex: "F5F7FA"))
                         .cornerRadius(10)
                         .overlay(
                             RoundedRectangle(cornerRadius: 10)
-                                .strokeBorder(Color(hex: "3B7DD6").opacity(0.3), lineWidth: 1)
+                                .strokeBorder(Color(hex: "4A90E2").opacity(0.2), lineWidth: 1)
                         )
                 }
                 .transition(.scale.combined(with: .opacity))
@@ -108,20 +108,9 @@ struct OCRSectionView: View {
         .padding(20)
         .background(
             RoundedRectangle(cornerRadius: 20)
-                .fill(Color.white.opacity(0.05))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 20)
-                        .strokeBorder(
-                            LinearGradient(
-                                gradient: Gradient(colors: [Color.white.opacity(0.15), Color.white.opacity(0.05)]),
-                                startPoint: .topLeading,
-                                endPoint: .bottomTrailing
-                            ),
-                            lineWidth: 1
-                        )
-                )
+                .fill(.white)
+                .shadow(color: Color.black.opacity(0.08), radius: 15, x: 0, y: 4)
         )
-        .shadow(color: .black.opacity(0.2), radius: 20, x: 0, y: 10)
         .padding(.horizontal, 20)
     }
 }

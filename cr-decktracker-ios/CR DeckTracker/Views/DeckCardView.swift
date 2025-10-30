@@ -8,11 +8,11 @@ struct DeckCardView: View {
     private var rankPrimaryColor: Color {
         switch rank {
         case 1:
-            return Color(hex: "FF8C00")
+            return Color(hex: "4A90E2")
         case 2:
-            return Color(hex: "3B7DD6")
+            return Color(hex: "5B9BD5")
         case 3:
-            return Color(hex: "8E44AD")
+            return Color(hex: "7FB3D5")
         default:
             return .gray
         }
@@ -23,19 +23,19 @@ struct DeckCardView: View {
         switch rank {
         case 1:
             return LinearGradient(
-                gradient: Gradient(colors: [Color(hex: "FF8C00"), Color(hex: "FFA500")]),
+                gradient: Gradient(colors: [Color(hex: "4A90E2"), Color(hex: "5B9BD5")]),
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
         case 2:
             return LinearGradient(
-                gradient: Gradient(colors: [Color(hex: "3B7DD6"), Color(hex: "5B9BD5")]),
+                gradient: Gradient(colors: [Color(hex: "5B9BD5"), Color(hex: "7FB3D5")]),
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
         case 3:
             return LinearGradient(
-                gradient: Gradient(colors: [Color(hex: "8E44AD"), Color(hex: "9B59B6")]),
+                gradient: Gradient(colors: [Color(hex: "7FB3D5"), Color(hex: "A4C9E0")]),
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
             )
@@ -68,7 +68,7 @@ struct DeckCardView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("Deck #\(rank)")
                         .font(.system(size: 18, weight: .bold, design: .rounded))
-                        .foregroundColor(.white)
+                        .foregroundColor(Color(hex: "2C3E50"))
 
                     HStack(spacing: 8) {
                         Text("\(Int(deck.confidence * 100))%")
@@ -77,7 +77,7 @@ struct DeckCardView: View {
 
                         Text("confidence")
                             .font(.system(size: 13, weight: .medium, design: .rounded))
-                            .foregroundColor(.white.opacity(0.5))
+                            .foregroundColor(Color(hex: "7F8C8D"))
                     }
                 }
 
@@ -92,46 +92,46 @@ struct DeckCardView: View {
             GeometryReader { geometry in
                 ZStack(alignment: .leading) {
                     RoundedRectangle(cornerRadius: 6)
-                        .fill(Color.white.opacity(0.1))
+                        .fill(Color(hex: "E0E6ED"))
                         .frame(height: 8)
 
                     RoundedRectangle(cornerRadius: 6)
                         .fill(rankGradient)
                         .frame(width: geometry.size.width * deck.confidence, height: 8)
-                        .shadow(color: rankPrimaryColor.opacity(0.6), radius: 4, x: 0, y: 2)
+                        .shadow(color: rankPrimaryColor.opacity(0.3), radius: 4, x: 0, y: 2)
                 }
             }
             .frame(height: 8)
 
             Divider()
-                .background(Color.white.opacity(0.1))
+                .background(Color(hex: "E0E6ED"))
 
             // Cards
             VStack(alignment: .leading, spacing: 8) {
                 HStack {
                     Image(systemName: "square.stack.3d.up.fill")
-                        .foregroundColor(.white.opacity(0.6))
+                        .foregroundColor(Color(hex: "7F8C8D"))
                         .font(.system(size: 12))
 
                     Text("CARDS")
                         .font(.system(size: 11, weight: .bold, design: .rounded))
                         .tracking(1)
-                        .foregroundColor(.white.opacity(0.6))
+                        .foregroundColor(Color(hex: "7F8C8D"))
                 }
 
                 FlowLayout(spacing: 8) {
                     ForEach(deck.deck, id: \.self) { card in
                         Text(card)
                             .font(.system(size: 13, weight: .semibold, design: .rounded))
-                            .foregroundColor(.white)
+                            .foregroundColor(Color(hex: "2C3E50"))
                             .padding(.horizontal, 12)
                             .padding(.vertical, 7)
                             .background(
                                 RoundedRectangle(cornerRadius: 8)
-                                    .fill(Color.white.opacity(0.12))
+                                    .fill(Color(hex: "F5F7FA"))
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 8)
-                                            .strokeBorder(Color.white.opacity(0.2), lineWidth: 1)
+                                            .strokeBorder(Color(hex: "E0E6ED"), lineWidth: 1)
                                     )
                             )
                     }
@@ -141,12 +141,12 @@ struct DeckCardView: View {
         .padding(18)
         .background(
             RoundedRectangle(cornerRadius: 18)
-                .fill(Color.white.opacity(0.06))
+                .fill(.white)
                 .overlay(
                     RoundedRectangle(cornerRadius: 18)
                         .strokeBorder(
                             LinearGradient(
-                                gradient: Gradient(colors: [rankPrimaryColor.opacity(0.3), Color.white.opacity(0.05)]),
+                                gradient: Gradient(colors: [rankPrimaryColor.opacity(0.3), Color(hex: "E0E6ED")]),
                                 startPoint: .topLeading,
                                 endPoint: .bottomTrailing
                             ),
@@ -154,6 +154,6 @@ struct DeckCardView: View {
                         )
                 )
         )
-        .shadow(color: .black.opacity(0.3), radius: 15, x: 0, y: 8)
+        .shadow(color: Color.black.opacity(0.08), radius: 15, x: 0, y: 4)
     }
 }

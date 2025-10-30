@@ -76,8 +76,15 @@ class APIService {
 
     // MARK: - Predict Decks
 
-    func predictDecks(playerTag: String) async throws -> PredictResponse {
-        let endpoint = baseURL.appendingPathComponent("/predict/\(playerTag)")
+    func predictDecks(playerTag: String, gameMode: String = "ranked") async throws -> PredictResponse {
+        var components = URLComponents(url: baseURL.appendingPathComponent("/predict/\(playerTag)"), resolvingAgainstBaseURL: true)!
+        components.queryItems = [
+            URLQueryItem(name: "game_mode", value: gameMode)
+        ]
+
+        guard let endpoint = components.url else {
+            throw APIError.invalidURL
+        }
 
         let (data, response) = try await session.data(from: endpoint)
 
@@ -100,12 +107,12 @@ class APIService {
 
     // MARK: - Combined Resolve and Predict
 
-    func resolveAndPredict(playerName: String, clanName: String) async throws -> (player: ResolveResponse, prediction: PredictResponse) {
+    func resolveAndPredict(playerName: String, clanName: String, gameMode: String = "ranked") async throws -> (player: ResolveResponse, prediction: PredictResponse) {
         // Step 1: Resolve player
         let resolvedPlayer = try await resolvePlayer(playerName: playerName, clanName: clanName)
 
-        // Step 2: Predict decks
-        let prediction = try await predictDecks(playerTag: resolvedPlayer.player_tag)
+        // Step 2: Predict decks with selected game mode
+        let prediction = try await predictDecks(playerTag: resolvedPlayer.player_tag, gameMode: gameMode)
 
         return (resolvedPlayer, prediction)
     }

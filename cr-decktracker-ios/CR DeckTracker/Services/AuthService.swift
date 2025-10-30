@@ -40,6 +40,11 @@ struct LoginRequest: Codable {
     let password: String
 }
 
+struct UpdateProfileRequest: Codable {
+    let player_tag: String?
+    let clan_tag: String?
+}
+
 class AuthService: ObservableObject {
     static let shared = AuthService()
 
@@ -126,6 +131,50 @@ class AuthService: ObservableObject {
                 self.currentUser = authResponse
                 self.isLoggedIn = true
                 return authResponse
+            } else {
+                let errorMessage = String(data: data, encoding: .utf8) ?? "Unknown error"
+                throw AuthError.serverError(errorMessage)
+            }
+        } catch let error as AuthError {
+            throw error
+        } catch {
+            throw AuthError.networkError(error)
+        }
+    }
+
+    @MainActor
+    func updateProfile(playerTag: String?, clanTag: String?) async throws {
+        guard let url = URL(string: "\(baseURL)/auth/update-profile") else {
+            throw AuthError.invalidURL
+        }
+
+        guard let token = getToken() else {
+            throw AuthError.serverError("Not authenticated")
+        }
+
+        let request = UpdateProfileRequest(
+            player_tag: playerTag,
+            clan_tag: clanTag
+        )
+
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = "PUT"
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        urlRequest.httpBody = try JSONEncoder().encode(request)
+
+        do {
+            let (data, response) = try await URLSession.shared.data(for: urlRequest)
+
+            guard let httpResponse = response as? HTTPURLResponse else {
+                throw AuthError.invalidResponse
+            }
+
+            if httpResponse.statusCode == 200 {
+                let authResponse = try JSONDecoder().decode(AuthResponse.self, from: data)
+                saveToken(authResponse.token)
+                self.currentUser = authResponse
+                return
             } else {
                 let errorMessage = String(data: data, encoding: .utf8) ?? "Unknown error"
                 throw AuthError.serverError(errorMessage)

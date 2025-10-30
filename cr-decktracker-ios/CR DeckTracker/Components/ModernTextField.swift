@@ -11,13 +11,13 @@ struct ModernTextField: View {
     var body: some View {
         HStack(spacing: 14) {
             Image(systemName: icon)
-                .foregroundColor(isFocused ? accentColor : .white.opacity(0.5))
+                .foregroundColor(isFocused ? accentColor : Color(hex: "7F8C8D"))
                 .font(.system(size: 16, weight: .semibold))
                 .frame(width: 22)
                 .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isFocused)
 
-            TextField("", text: $text, prompt: Text(placeholder).foregroundColor(.white.opacity(0.4)))
-                .foregroundColor(.white)
+            TextField("", text: $text, prompt: Text(placeholder).foregroundColor(Color(hex: "95A5A6")))
+                .foregroundColor(Color(hex: "2C3E50"))
                 .font(.system(size: 16, weight: .medium, design: .rounded))
                 .autocapitalization(.none)
                 .disableAutocorrection(true)
@@ -25,12 +25,12 @@ struct ModernTextField: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 14)
-        .background(Color.black.opacity(0.25))
+        .background(Color(hex: "F5F7FA"))
         .cornerRadius(12)
         .overlay(
             RoundedRectangle(cornerRadius: 12)
                 .strokeBorder(
-                    isFocused ? accentColor : Color.white.opacity(0.15),
+                    isFocused ? accentColor : Color(hex: "E0E6ED"),
                     lineWidth: isFocused ? 2 : 1
                 )
                 .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isFocused)
