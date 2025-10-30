@@ -4,6 +4,18 @@ struct HeaderView: View {
     var body: some View {
         VStack(spacing: 12) {
             ZStack {
+                // Outer glow layers for soft blue emanation
+                Circle()
+                    .fill(Color(hex: "4A90E2").opacity(0.15))
+                    .frame(width: 100, height: 100)
+                    .blur(radius: 20)
+
+                Circle()
+                    .fill(Color(hex: "4A90E2").opacity(0.2))
+                    .frame(width: 90, height: 90)
+                    .blur(radius: 15)
+
+                // Main crown circle with gradient
                 Circle()
                     .fill(
                         LinearGradient(
@@ -13,6 +25,7 @@ struct HeaderView: View {
                         )
                     )
                     .frame(width: 80, height: 80)
+                    .shadow(color: Color(hex: "4A90E2").opacity(0.5), radius: 25, x: 0, y: 0)
                     .shadow(color: Color(hex: "4A90E2").opacity(0.3), radius: 15, x: 0, y: 5)
 
                 Image(systemName: "crown.fill")

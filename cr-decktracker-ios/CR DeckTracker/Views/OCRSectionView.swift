@@ -6,6 +6,11 @@ struct OCRSectionView: View {
     @Binding var ocrText: String
     let onUseAsPlayerName: () -> Void
 
+    @State private var showingImageSourceAction = false
+    @State private var showingCamera = false
+    @State private var showingPhotoLibrary = false
+    @State private var capturedImage: UIImage?
+
     var body: some View {
         VStack(spacing: 16) {
             HStack {
@@ -16,7 +21,9 @@ struct OCRSectionView: View {
             }
 
             // Interactive Scan Zone - 80% Size
-            PhotosPicker(selection: $item, matching: .images) {
+            Button(action: {
+                showingImageSourceAction = true
+            }) {
                 VStack(spacing: 10) {
                     // Camera Icon (80% of 56 = 44.8)
                     ZStack {
@@ -41,7 +48,7 @@ struct OCRSectionView: View {
                             .font(.system(size: 13, weight: .bold, design: .rounded))
                             .foregroundColor(Color(hex: "2C3E50"))
 
-                        Text("Select a screenshot")
+                        Text("Camera or Library")
                             .font(.system(size: 10, weight: .medium, design: .rounded))
                             .foregroundColor(Color(hex: "7F8C8D"))
                     }
@@ -65,6 +72,21 @@ struct OCRSectionView: View {
                 )
             }
             .padding(.horizontal, 30)
+            .confirmationDialog("Choose Image Source", isPresented: $showingImageSourceAction, titleVisibility: .hidden) {
+                Button("📷 Take Photo") {
+                    showingCamera = true
+                }
+                Button("🖼️ Choose from Library") {
+                    showingPhotoLibrary = true
+                }
+                Button("Cancel", role: .cancel) { }
+            }
+            .sheet(isPresented: $showingCamera) {
+                ImagePicker(image: $capturedImage, sourceType: .camera)
+            }
+            .sheet(isPresented: $showingPhotoLibrary) {
+                ImagePicker(image: $capturedImage, sourceType: .photoLibrary)
+            }
 
             // Scanned Text Display
             if ocrText != "Tap to scan screenshot" {
@@ -112,5 +134,27 @@ struct OCRSectionView: View {
                 .shadow(color: Color.black.opacity(0.08), radius: 15, x: 0, y: 4)
         )
         .padding(.horizontal, 20)
+        .onChange(of: capturedImage) { newImage in
+            if let image = newImage {
+                Task {
+                    await processImage(image)
+                }
+            }
+        }
+    }
+
+    private func processImage(_ image: UIImage) async {
+        ocrText = "Scanning..."
+
+        do {
+            let text = try await OCRService.shared.extractText(from: image)
+            withAnimation(.spring(response: 0.4, dampingFraction: 0.75)) {
+                ocrText = text
+            }
+        } catch {
+            withAnimation(.spring(response: 0.4, dampingFraction: 0.75)) {
+                ocrText = error.localizedDescription
+            }
+        }
     }
 }
