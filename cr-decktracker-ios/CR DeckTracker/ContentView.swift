@@ -33,23 +33,20 @@ struct ContentView_Old: View {
                 VStack(spacing: 24) {
                     HeaderView()
 
-                    OCRSectionView(
-                        item: $item,
-                        ocrText: $ocrText,
-                        onUseAsPlayerName: {
-                            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                                playerName = ocrText
-                            }
-                        }
-                    )
-
                     InputSectionView(
                         playerName: $playerName,
                         clanName: $clanName,
                         isLoading: $isLoading,
                         gameMode: $gameMode,
+                        ocrText: $ocrText,
+                        item: $item,
                         onFindDecks: {
                             Task { await resolveAndPredict() }
+                        },
+                        onUseAsPlayerName: {
+                            withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                                playerName = ocrText
+                            }
                         }
                     )
 
@@ -64,7 +61,7 @@ struct ContentView_Old: View {
                         ErrorView(errorMessage: errorMessage)
                     }
 
-                    Spacer(minLength: 40)
+                    Spacer(minLength: 80)
                 }
                 .padding(.top, 10)
             }
