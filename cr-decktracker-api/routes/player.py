@@ -20,7 +20,7 @@ router = APIRouter(tags=["Player"])
 
 
 @router.post("/resolve_player", response_model=ResolveResp)
-async def resolve_player(req: ResolveReq, request: Request, redis_client):
+async def resolve_player(req: ResolveReq, request: Request, redis_client=None):
     """
     Find player's tag by fuzzy matching their name inside a clan (by clan tag).
 
@@ -51,7 +51,7 @@ async def resolve_player(req: ResolveReq, request: Request, redis_client):
 
 
 @router.post("/resolve_player_by_name", response_model=ResolveResp)
-async def resolve_player_by_name(req: ResolveByNameReq, request: Request, redis_client):
+async def resolve_player_by_name(req: ResolveByNameReq, request: Request, redis_client=None):
     """
     Find player by searching clan name, then fuzzy matching player within clan.
 
@@ -87,7 +87,7 @@ async def resolve_player_by_name(req: ResolveByNameReq, request: Request, redis_
 async def predict(
     player_tag: str,
     request: Request,
-    redis_client,
+    redis_client=None,
     game_mode: str = "ranked"
 ):
     """
@@ -121,7 +121,7 @@ async def predict(
 
 
 @router.get("/player/{player_tag}/stats", response_model=PlayerStatsResp)
-async def get_player_stats(player_tag: str, request: Request, redis_client):
+async def get_player_stats(player_tag: str, request: Request, redis_client=None):
     """
     Get detailed player statistics including recent battles and top decks.
 
@@ -157,7 +157,7 @@ async def get_player_stats(player_tag: str, request: Request, redis_client):
 
 
 @router.get("/debug/battlelog/{player_tag}")
-async def debug_battlelog(player_tag: str, redis_client):
+async def debug_battlelog(player_tag: str, redis_client=None):
     """
     Return raw battle log for debugging.
 

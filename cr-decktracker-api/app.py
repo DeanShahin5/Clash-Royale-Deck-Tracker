@@ -5,11 +5,12 @@ A modular FastAPI application for tracking Clash Royale player and clan statisti
 Organized into clean, maintainable modules for routes, services, and utilities.
 """
 from contextlib import asynccontextmanager
+from functools import wraps
 from fastapi import FastAPI
 import redis.asyncio as redis
 
 # Configuration
-from config import REDIS_URL
+from config import REDIS_URL, PORT, HOST
 
 # Database
 from database import init_db
@@ -76,13 +77,11 @@ for router_module in [health, auth, player, clan]:
 
             # Wrap the endpoint to inject redis_client
             def make_wrapper(original):
+                @wraps(original)
                 async def wrapper(*args, redis_client=None, **kwargs):
                     if redis_client is None:
                         redis_client = get_redis()
                     return await original(*args, redis_client=redis_client, **kwargs)
-
-                wrapper.__name__ = original.__name__
-                wrapper.__doc__ = original.__doc__
                 return wrapper
 
             route.endpoint = make_wrapper(original_endpoint)
@@ -97,4 +96,5 @@ app.include_router(clan.router, tags=["Clan"])
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("app:app", host="0.0.0.0", port=8000, reload=True)
+    # For local development only - Render uses gunicorn instead
+    uvicorn.run("app:app", host=HOST, port=PORT, reload=True)

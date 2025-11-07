@@ -9,7 +9,7 @@ router = APIRouter()
 
 
 @router.get("/health")
-async def health(redis_client):
+async def health(redis_client=None):
     """
     Health check endpoint.
     Returns status of Redis and database connections.
@@ -23,7 +23,7 @@ async def health(redis_client):
 
 
 @router.get("/stats")
-async def stats(redis_client):
+async def stats(redis_client=None):
     """
     Get cache and database statistics.
     Shows battle logs cached and Redis hit/miss rates.
@@ -49,7 +49,7 @@ async def stats(redis_client):
 
 
 @router.delete("/cache/clear")
-async def clear_cache(redis_client):
+async def clear_cache(redis_client=None):
     """
     Clear all Redis cache.
     Admin endpoint for cache management.

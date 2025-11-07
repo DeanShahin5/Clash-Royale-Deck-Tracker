@@ -22,7 +22,7 @@ router = APIRouter(prefix="/clan", tags=["Clan"])
 @router.post("/{clan_tag}/track", response_model=TrackClanResp)
 async def start_tracking_clan(
     clan_tag: str,
-    redis_client,
+    redis_client=None,
     current_user: dict = Depends(get_current_user),
     db: Session = Depends(get_db_session)
 ):
@@ -116,7 +116,7 @@ async def get_tracking_status(clan_tag: str, db: Session = Depends(get_db_sessio
 @router.post("/{clan_tag}/snapshot")
 async def create_snapshot(
     clan_tag: str,
-    redis_client,
+    redis_client=None,
     current_user: dict = Depends(get_current_user),
     db: Session = Depends(get_db_session)
 ):
@@ -155,7 +155,7 @@ async def create_snapshot(
 @router.get("/{clan_tag}/stats", response_model=ClanStatsResp)
 async def get_clan_stats(
     clan_tag: str,
-    redis_client,
+    redis_client=None,
     time_period: str = "week",
     request: Request = None
 ):
@@ -271,7 +271,7 @@ async def get_clan_stats(
                 for race in river_race[:5]:  # Last 5 races
                     if "standings" in race:
                         for standing in race["standings"]:
-                            if standing.get("clan", {}).get("tag") == clan_tag:
+                            if standing.get("clan", {}).get("tag") == validated_clan_tag:
                                 participants = standing.get("clan", {}).get("participants", [])
                                 for p in participants:
                                     if p.get("tag") == member_tag:

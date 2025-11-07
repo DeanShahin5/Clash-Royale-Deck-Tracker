@@ -8,12 +8,16 @@ from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 
+# Server Configuration
+PORT = int(os.getenv("PORT", "8000"))  # Render provides PORT automatically
+HOST = "0.0.0.0"  # Bind to all interfaces for cloud deployment
+
 # Supercell API Configuration
 SUPERCELL_API_TOKEN = os.getenv("SUPERCELL_API_TOKEN", "")
 SUPERCELL_API_BASE_URL = "https://api.clashroyale.com/v1"
 
 if not SUPERCELL_API_TOKEN:
-    raise RuntimeError("Missing SUPERCELL_API_TOKEN in .env")
+    raise RuntimeError("Missing SUPERCELL_API_TOKEN in environment variables")
 
 # Database Configuration
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://localhost/decktracker")
@@ -22,7 +26,12 @@ DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://localhost/decktracker")
 REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379")
 
 # JWT Authentication
-JWT_SECRET = os.getenv("JWT_SECRET", "your-secret-key-change-in-production")
+JWT_SECRET = os.getenv("JWT_SECRET", "")
+if not JWT_SECRET:
+    raise RuntimeError(
+        "Missing JWT_SECRET in environment variables. "
+        "Generate one with: python -c \"import secrets; print(secrets.token_urlsafe(32))\""
+    )
 JWT_ALGORITHM = "HS256"
 JWT_EXPIRATION_DAYS = 7
 
